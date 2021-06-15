@@ -1,0 +1,123 @@
+#include "panel.h"
+#include "pcrack.h"
+
+int useNumbers(void);
+int useAlphabet(void);
+int useSpecialChar(void);
+
+/**
+* Establish a menu to set the paramters to set the passward cracker.
+* @param passwardToCrack provided password to find
+* @return the found password
+*/
+int* mainMenu(void)
+{
+	int minLength, maxLength, numbers, alphabet, symbol;
+	static int returnVal [5] = {0};
+
+	do {
+		cout << "The min Length of password: ";
+		cin >> minLength;
+		cout << "The max Length of password: ";
+		cin >> maxLength;
+		if (minLength <= maxLength && minLength > 0)
+			break;
+		cout << "Password Max can not be less than Min length.\nPlease Try Again" << endl;
+	} while (true);
+
+	if (true) // testing
+	{
+		numbers = useNumbers();
+		alphabet = useAlphabet();
+		symbol = useSpecialChar();
+	}
+	else
+	{
+		numbers = 1;
+		alphabet = 0;
+		symbol = 0;
+	}
+
+	if (numbers == 0 && alphabet == 0 && symbol == 0)
+	{
+		cout << "Bad Parameters!" << endl;
+	}
+	else
+	{
+		returnVal[0] = minLength;
+		returnVal[1] = maxLength;
+		returnVal[2] = numbers;
+		returnVal[3] = alphabet;
+		returnVal[4] = symbol;
+	}
+
+	return returnVal;
+}
+
+/**
+* Menu for inclusion of numbers
+* @return 0 no Numbers, 1 use Numbers 
+*/
+int useNumbers(void)
+{
+	int numbers = 0;
+	do {
+		cout <<
+			"****************************\n"
+			"* 0 - No Numbers Used      *\n"
+			"* 1 - Use Numbers          *\n"
+			"****************************\n"
+			"Please Enter 0 or 1: ";
+		cin >> numbers;
+		if (numbers == 0 || numbers == 1)
+			break;
+		cout << "Incorrect Input, Try Again" << endl;
+	} while (true);
+	return numbers;
+}
+
+/**
+* Menu for inclusion of alphabet
+* @return 0 no alphabet, 1 none cap sensiteve, 2 cap sensitive
+*/
+int useAlphabet(void)
+{
+	int alphabet = 0;
+	do {
+		cout <<
+			"****************************\n"
+			"* 0 - No Alphabet Used     *\n"
+			"* 1 - Use Alphabet         *\n"
+			"* 2 - Case Sensitive       *\n"
+			"****************************\n"
+			"Please Enter 0, 1, or 2: ";
+		cin >> alphabet;
+		if (alphabet >= 0 && alphabet <= 2)
+			break;
+		cout << "Incorrect Input, Try Again" << endl;
+	} while (true);
+	return alphabet;
+}
+
+/**
+* Menu for inclusion of special characters
+* @return 0 no symbols, 1 some symbols, 2 all symbols
+*/
+int useSpecialChar(void)
+{
+	int symbol = 0;
+	do {
+		cout <<
+			"****************************\n"
+			"* 0 - No Symbols Used      *\n"
+			"* 1 - Use Spceial Symbol   *\n"
+			"* 2 - All Symbols          *\n"
+			"****************************\n"
+			"Please Enter 0, 1, or 2: ";
+		cin >> symbol;
+		if (symbol >= 0 && symbol <= 2)
+			break;
+		cout << "Incorrect Input, Try Again" << endl;
+	} while (true);
+	return symbol;
+}
