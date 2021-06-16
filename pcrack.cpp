@@ -2,6 +2,7 @@
 #include <string>
 #include <thread>
 #include "pcrack.h"
+#include "passwordComponent.h"
 #define NUMBERSONLY 10
 #define ALPHABETONLY 100
 
@@ -14,32 +15,27 @@ int resetPosition(int);
 /**
 * https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html
 */
-string cracker(string passwordToCrack, int* parameters)
+string cracker(string passwordToCrack)
 {
-	int minLength, maxLength, numbers, alphabet, symbol;
 	int type = 0;
 	string password;
-	char* passwordArray = new char(*(parameters + 1));
+	char* passwordArray = new char(pc.maxLength);
 	int size = 0;
 
 	cout << "Running Password Cracker" << endl;
 
 	// init parameters
-	if (*(parameters + 2) == 0 && *(parameters + 3) == 0 && *(parameters + 4) == 0)
+	if (pc.numbers == 0 && pc.alphabet == 0 && pc.symbol == 0)
 	{
 		return "";
 	}
 	else
 	{
-		minLength = *(parameters);
-		maxLength = *(parameters + 1);
-		numbers = *(parameters + 2);
-		if (numbers > 0)
+		if (pc.numbers > 0)
 		{
 			type = NUMBERSONLY;
 		}
-		alphabet = *(parameters + 3);
-		switch (alphabet)
+		switch (pc.alphabet)
 		{
 		case 2:
 			type += ALPHABETONLY;
@@ -49,8 +45,7 @@ string cracker(string passwordToCrack, int* parameters)
 		default:
 			break;
 		}
-		symbol = *(parameters + 4);
-		switch (symbol)
+		switch (pc.symbol)
 		{
 		case 2:
 			type += 1;
@@ -65,7 +60,7 @@ string cracker(string passwordToCrack, int* parameters)
 	cout << "type: " << type << endl;
 
 	// Initilaze string to compare
-	size = expand(passwordArray, maxLength, minLength - 1, type);
+	size = expand(passwordArray, pc.maxLength, pc.minLength - 1, type);
 
 	// begin cracking...
 	cout << "Cracking..." << endl;
@@ -78,7 +73,7 @@ string cracker(string passwordToCrack, int* parameters)
 			break;
 		}
 
-		size = iteratePasswordPosition(passwordArray, maxLength, size, size - 1, type);
+		size = iteratePasswordPosition(passwordArray, pc.maxLength, size, size - 1, type);
 		if (size == -1)
 		{
 			cout << "Not Found" << endl;

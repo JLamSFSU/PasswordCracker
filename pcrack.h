@@ -1,3 +1,3 @@
 #pragma once
 using namespace std;
-string cracker(string, int*);
+string cracker(string);

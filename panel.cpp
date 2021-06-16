@@ -1,16 +1,19 @@
 #include "panel.h"
 #include "pcrack.h"
+#include "passwordComponent.h"
 
 int useNumbers(void);
 int useAlphabet(void);
 int useSpecialChar(void);
+
+PasswordComponent pc = PasswordComponent();
 
 /**
 * Establish a menu to set the paramters to set the passward cracker.
 * @param passwardToCrack provided password to find
 * @return the found password
 */
-int* mainMenu(void)
+void mainMenu(void)
 {
 	int minLength, maxLength, numbers, alphabet, symbol;
 	static int returnVal [5] = {0};
@@ -44,14 +47,12 @@ int* mainMenu(void)
 	}
 	else
 	{
-		returnVal[0] = minLength;
-		returnVal[1] = maxLength;
-		returnVal[2] = numbers;
-		returnVal[3] = alphabet;
-		returnVal[4] = symbol;
+		setPC(minLength, maxLength, numbers, alphabet, symbol);
+		cout << "OG: " << minLength << ", " << maxLength << ", " << numbers << endl;
+		cout << "PC: " << pc.minLength << ", " << pc.maxLength << ", " << pc.numbers << endl;
 	}
 
-	return returnVal;
+	return;
 }
 
 /**

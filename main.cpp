@@ -10,7 +10,8 @@ int main(void)
 	cout << "Enter Password to Crack: ";
 	cin >> passwordToCrack;
 
-	passwordFound = cracker(passwordToCrack, mainMenu());
+	mainMenu();
+	passwordFound = cracker(passwordToCrack);
 	cout << "Password is: " << passwordFound << endl;
 	return 0;
 }
