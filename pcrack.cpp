@@ -9,6 +9,7 @@
 string convertToString(char*, int);
 
 int iteratePasswordPosition(char[], int, int, int, int);
+int iterateSpcialChars(char[], int, int);
 int expand(char[], int, int, int);
 int resetPosition(int);
 
@@ -65,8 +66,19 @@ string cracker(string passwordToCrack)
 	// begin cracking...
 	cout << "Cracking..." << endl;
 	while (true)
-	{
+	{	
+		/*
+		if (passwordArray[0] != '0' && passwordArray[1] != '1')
+		{
+			if (passwordArray[size - 1] % 2 == 0)
+				cout << " <(^.^ <) ";
+			else
+				cout << " 7( ^.^)7 ";
+		}
+		*/
+
 		password = convertToString(passwordArray, size);
+		// cout << "Testing: " << password << endl;
 		if (passwordToCrack.compare(password) == 0)
 		{
 			cout << "Password Found." << endl;
@@ -77,7 +89,7 @@ string cracker(string passwordToCrack)
 		if (size == -1)
 		{
 			cout << "Not Found" << endl;
-			return "";
+			exit(0);
 		}
 	}
 	return password;
@@ -106,23 +118,72 @@ string convertToString(char* a, int size)
 */
 int iteratePasswordPosition(char password[], int maxsize, int size, int position, int type)
 {
-	if ((resetPosition(type) == 33 || resetPosition(type) == 48) && password[position] == 57 && position > 0)
+	if (type <= 2 && password[position] == 126 && position > 0) // overflow for special char
 	{
+		// cout << "case 1" << endl;
+		// Deal with special character
+		if (password[position - 1] == 126)
+			size = iteratePasswordPosition(password, maxsize, size, position - 1, type);
+		else
+			password[position - 1] = iterateSpcialChars(password,position - 1, type);
+		if (type % 10 == 1 || type % 10 == 2)
+			password[position] = resetPosition(type);
+	} 
+	else if (type <= 12 && password[position] == 57 && position > 0) // when char reaches max for special and number
+	{
+		// cout << "case 2" << endl;
 		if (password[position - 1] == 57)
 			size = iteratePasswordPosition(password, maxsize, size, position - 1, type);
 		else
-			password[position - 1] += 1;
-		if (type == NUMBERSONLY)
+			password[position - 1] = iterateSpcialChars(password, position - 1, type);
+		if (type == NUMBERSONLY || type == 11 || type == 12)
 			password[position] = resetPosition(type);
+
 	}
 	else
 	{
-		if (position == 0 && password[position] == 57)
+		// cout << "case 3" << endl;
+		// Expands the passowrd if at capacity
+		if (position == 0 && ((type <= 12 && password[position] == 57) || (type == 1 && password[position] == 126) || (type == 2 && password[position] == 126)))
 			return expand(password, maxsize, size, type);
 		else
-			password[position] += 1;
+		{
+			if (type % 10 == 1 || type % 10 == 2)
+			{
+				password[position] = iterateSpcialChars(password, position, type);
+			}
+			else
+				password[position] += 1;
+		}
 	}
 	return size;
+}
+
+/**
+* @param password the password
+* @param position current position in the password array to iterate
+* @param type password type for iterating through all special char
+* @return the new loaction in iteration
+*/
+int iterateSpcialChars(char password[], int position, int type)
+{
+	// cout << "Iterating Special Char" << endl;
+	switch (password[position])
+	{
+	case 47:
+		return 58;
+	case 64:
+		return 91;
+	case 96:
+		return 123;
+	case 126:
+		if (type > 2 && type < 100)
+			return 48;
+	default:
+		return password[position] + 1;
+		break;
+	}
+	// return password[position] + 1;
 }
 
 /**
@@ -133,7 +194,7 @@ int iteratePasswordPosition(char password[], int maxsize, int size, int position
 */
 int expand(char password[], int maxsize, int size, int type)
 {
-	cout << "Expanding...\nSize:Maxsize\n" << size << ":" << maxsize << endl;
+	// cout << "Expanding...\nSize:Maxsize\n" << size << ":" << maxsize << endl;
 	if (size == maxsize)
 		return -1;
 	for (int i = 0; i <= size; i++)
@@ -151,9 +212,9 @@ int expand(char password[], int maxsize, int size, int type)
 			password[i] = 'A';
 			break;
 		}
-		cout << password[i];
+		// cout << password[i];
 	}
-	cout << endl;
+	// cout << endl;
 	return size + 1;
 }
 

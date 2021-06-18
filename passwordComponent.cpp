@@ -14,15 +14,19 @@ PasswordComponent::PasswordComponent(int minLength, int maxLength,
 void setPC(int minLength, int maxLength,
 	int numbers, int alphabet, int symbol)
 {
-	cout << "Setting PC" << endl;
 	pc.minLength = minLength;
-	cout << "MinLength " << pc.minLength << ":" << minLength << endl;
 	pc.maxLength = maxLength;
-	cout << "MaxLength " << pc.maxLength << ":" << maxLength << endl;
 	pc.numbers = numbers;
-	cout << "numbers " << pc.numbers << ":" << numbers << endl;
 	pc.alphabet = alphabet;
-	cout << "alphabet " << pc.alphabet << ":" << alphabet << endl;
 	pc.symbol = symbol;
-	cout << "symbol " << pc.symbol << ":" << symbol << endl;
+
+	if (false)
+	{
+		cout << "Setting PC" << endl;
+		cout << "MinLength " << pc.minLength << ":" << minLength << endl;
+		cout << "MaxLength " << pc.maxLength << ":" << maxLength << endl;
+		cout << "numbers " << pc.numbers << ":" << numbers << endl;
+		cout << "alphabet " << pc.alphabet << ":" << alphabet << endl;
+		cout << "symbol " << pc.symbol << ":" << symbol << endl;
+	}
 }

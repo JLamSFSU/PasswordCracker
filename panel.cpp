@@ -48,8 +48,8 @@ void mainMenu(void)
 	else
 	{
 		setPC(minLength, maxLength, numbers, alphabet, symbol);
-		cout << "OG: " << minLength << ", " << maxLength << ", " << numbers << endl;
-		cout << "PC: " << pc.minLength << ", " << pc.maxLength << ", " << pc.numbers << endl;
+		// cout << "OG: " << minLength << ", " << maxLength << ", " << numbers << endl;
+		// cout << "PC: " << pc.minLength << ", " << pc.maxLength << ", " << pc.numbers << endl;
 	}
 
 	return;
