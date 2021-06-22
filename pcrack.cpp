@@ -78,7 +78,7 @@ string cracker(string passwordToCrack)
 		*/
 
 		password = convertToString(passwordArray, size);
-		cout << "Testing: " << password << endl;
+		// cout << "Testing: " << password << endl;
 		if (passwordToCrack.compare(password) == 0)
 		{
 			cout << "Password Found." << endl;
@@ -225,25 +225,6 @@ int expand(char password[], int maxsize, int size, int type)
 	// cout << "Expanding...\nSize:Maxsize\n" << size << ":" << maxsize << endl;
 	if (size == maxsize)
 		return -1;
-	/*
-	for (int i = 0; i <= size; i++)
-	{
-		switch (type)
-		{
-		default:
-			password[i] = '!';
-			break;
-		case NUMBERSONLY:
-			password[i] = '0';
-			break;
-		case ALPHABETONLY:
-		case 200: // cap sensitive
-			password[i] = 'A';
-			break;
-		}
-		// cout << password[i];
-	}
-	*/
 	for (int i = 0; i <= size; i++)
 	{
 
@@ -265,23 +246,6 @@ int expand(char password[], int maxsize, int size, int type)
 */
 int resetPosition(int type)
 {
-	/*
-	int rPos = 0;
-	switch (type)
-	{
-		default:
-			rPos = 33;
-			break;
-		case NUMBERSONLY:
-			rPos = 48;
-			break;
-		case ALPHABETONLY:
-		case 200: // cap sensitive
-			rPos = 65;
-			break;
-	}
-	return rPos;
-	*/
 	if (type % 10 == 1 || type % 10 == 2)
 		return 33;
 	else if (type % 100 > 0)
