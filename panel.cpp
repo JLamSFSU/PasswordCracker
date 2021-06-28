@@ -30,18 +30,18 @@ void mainMenu(void)
 
 	if (true) // testing
 	{
-		numbers = useNumbers();
 		alphabet = useAlphabet();
+		numbers = useNumbers();
 		symbol = useSpecialChar();
 	}
 	else
 	{
-		numbers = 1;
 		alphabet = 0;
+		numbers = 1;
 		symbol = 0;
 	}
 
-	if (numbers == 0 && alphabet == 0 && symbol == 0)
+	if (alphabet == 0 && numbers == 0 && symbol == 0)
 	{
 		cout << "Bad Parameters!" << endl;
 	}
@@ -88,7 +88,7 @@ int useAlphabet(void)
 		cout <<
 			"****************************\n"
 			"* 0 - No Alphabet Used     *\n"
-			"* 1 - Use Alphabet         *\n"
+			"* 1 - Use Captilze Alphabet*\n"
 			"* 2 - Case Sensitive       *\n"
 			"****************************\n"
 			"Please Enter 0, 1, or 2: ";
@@ -113,6 +113,9 @@ int useSpecialChar(void)
 			"* 0 - No Symbols Used      *\n"
 			"* 1 - Use Spceial Symbol   *\n"
 			"* 2 - All Symbols          *\n"
+			"* Differnce between 1 and 2*\n"
+			"*   is not implemented at  *\n"
+			"*   at this time.          *\n"
 			"****************************\n"
 			"Please Enter 0, 1, or 2: ";
 		cin >> symbol;
