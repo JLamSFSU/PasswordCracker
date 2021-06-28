@@ -5,15 +5,16 @@
 int useNumbers(void);
 int useAlphabet(void);
 int useSpecialChar(void);
+int methodToUse(void);
 
 PasswordComponent pc = PasswordComponent();
 
 /**
 * Establish a menu to set the paramters to set the passward cracker.
 * @param passwardToCrack provided password to find
-* @return the found password
+* @return integer value of what to use to find password
 */
-void mainMenu(void)
+int mainMenu(void)
 {
 	int minLength, maxLength, numbers, alphabet, symbol;
 	static int returnVal [5] = {0};
@@ -52,7 +53,7 @@ void mainMenu(void)
 		// cout << "PC: " << pc.minLength << ", " << pc.maxLength << ", " << pc.numbers << endl;
 	}
 
-	return;
+	return methodToUse();
 }
 
 /**
@@ -124,4 +125,28 @@ int useSpecialChar(void)
 		cout << "Incorrect Input, Try Again" << endl;
 	} while (true);
 	return symbol;
+}
+
+/**
+* Ask what kind of method to find password
+* @return 0 both, 1 brute force, 2 file
+*/
+int methodToUse(void)
+{
+	int methodUse = 0;
+	do {
+		cout <<
+			"****************************\n"
+			"* Method to find password  *\n"
+			"* 0 - Both                 *\n"
+			"* 1 - Brute force          *\n"
+			"* 2 - File                 *\n"
+			"****************************\n"
+			"Please Enter 0, 1, or 2: ";
+		cin >> methodUse;
+		if (methodUse >= 0 && methodUse <= 2)
+			break;
+		cout << "Incorrect Input, Try Again" << endl;
+	} while (true);
+	return methodUse;
 }
