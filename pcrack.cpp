@@ -141,9 +141,9 @@ int iteratePasswordPosition(char password[], int maxsize, int size, int position
 			password[position] = resetPosition(type);
 
 	}
-	else if ((password[position] == 90 && type < 200) || (password[position] == 122 && type >= 200) && position > 0)
+	else if (((password[position] == 90 && type < 200) || (password[position] == 122 && type >= 200)) && position > 0)
 	{
-		// cout << "case 3" << endl;
+		// cout << "case 3 " << position << ":"<< size <<endl;
 		// Deals with Alphabet
 		if ((type < 200 && password[position - 1] == 90) || (type >= 200 && password[position - 1] == 122))
 			size = iteratePasswordPosition(password, maxsize, size, position - 1, type);
@@ -158,7 +158,7 @@ int iteratePasswordPosition(char password[], int maxsize, int size, int position
 		// Expands the passowrd if at capacity
 		if (position == 0 &&
 			((type <= 12 && password[position] == 57) ||
-				(type == 1&& password[position] == 126) ||
+				(type == 1 && password[position] == 126) ||
 				(type == 2 && password[position] == 126) ||
 				(type >= 200 && password[position] == 122) ||
 				(type >= 100 && password[position] == 90)))
