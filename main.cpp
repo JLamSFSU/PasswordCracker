@@ -30,7 +30,6 @@ int main(void)
 	do {
 		cout << "\n\nRestart? (1 for yes 0 for no): ";
 		cin >> yn;
-		cout << "yn:" << yn << endl;
 		switch (yn)
 		{
 		case '0':
