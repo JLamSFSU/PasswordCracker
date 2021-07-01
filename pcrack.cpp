@@ -43,8 +43,6 @@ string cracker(string passwordToCrack)
 		case 1:
 			type += ALPHABETONLY;
 			break;
-		default:
-			break;
 		}
 		switch (pc.symbol)
 		{
@@ -52,8 +50,6 @@ string cracker(string passwordToCrack)
 			type += 1;
 		case 1:
 			type += 1;
-			break;
-		default:
 			break;
 		}
 	}
@@ -67,16 +63,6 @@ string cracker(string passwordToCrack)
 	cout << "Cracking..." << endl;
 	while (true)
 	{	
-		/*
-		if (passwordArray[0] != '0' && passwordArray[1] != '1')
-		{
-			if (passwordArray[size - 1] % 2 == 0)
-				cout << " <(^.^ <) ";
-			else
-				cout << " 7( ^.^)7 ";
-		}
-		*/
-
 		password = convertToString(passwordArray, size);
 		// cout << "Testing: " << password << endl;
 		if (passwordToCrack.compare(password) == 0)
