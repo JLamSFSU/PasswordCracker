@@ -75,8 +75,8 @@ int getList(string listOfP[])
 	bool regexCase = true;
 	string tempWord;
 	// regex cap("[A-Z]");
-	// regex allLeters("[a-Z]");
-	regex dig("\d+");
+	regex allLeters("[a-z]+");
+	regex dig("[0-9]+");
 	// regex specChar("[!\"#$'()*+-./:;<=>?@\[\]\\^_`{|}~]");
 	// regex spcChar("[@_!#$%^&*()<>?/|}{~:]");
 
@@ -89,17 +89,25 @@ int getList(string listOfP[])
 		return -1;
 	}
 
+	int excludedWords = 0;
 	for (int i = 0; i < 100; i++)
 	{
 		file >> tempWord;
-		// cout << tempWord << endl;
+
+		if (tempWord.length() < pc.minLength || tempWord.length() > pc.maxLength)
+		{
+			excludedWords++;
+			continue;
+		}
 
 		// if (regex_match(tempWord, cap))
 		//	cout << "Has Cap Letter" << endl;
-
+		cout << tempWord;
+		if (regex_match(tempWord, allLeters))
+			cout << " Has A letter";
 		if (regex_match(tempWord, dig))
-			cout << "Has A Digits" << endl;
-
+			cout << " Has A Digits";
+		cout << endl;
 		// Regex case goes here which determines if it stores
 		// the word to check.
 
@@ -110,9 +118,7 @@ int getList(string listOfP[])
 		}
 	}
 
-	// cout << "Printing file:" << endl;
-	// for (int i = 0; i < sizeOfList; i += 10)
-	// 	cout << listOfP[i] << endl;
+	// 	cout << "There are " << excludedWords << " excluded words." << endl;
 	
 	return sizeOfList;
 }
