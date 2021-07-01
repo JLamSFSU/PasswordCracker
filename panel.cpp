@@ -116,7 +116,7 @@ int useSpecialChar(void)
 			"* 2 - All Symbols          *\n"
 			"* Differnce between 1 and 2*\n"
 			"*   is not implemented at  *\n"
-			"*   at this time.          *\n"
+			"*   this time.             *\n"
 			"****************************\n"
 			"Please Enter 0, 1, or 2: ";
 		cin >> symbol;
