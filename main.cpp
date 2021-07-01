@@ -25,7 +25,10 @@ int main(void)
 		passwordFound = compare(passwordToCrack);
 		break;
 	}
-	cout << "Password is: " << passwordFound << endl;
+	if (passwordFound != "")
+		cout << "Password is: " << passwordFound << endl;
+	else
+		cout << "Try again..." << endl;
 
 	do {
 		cout << "\n\nRestart? (1 for yes 0 for no): ";

@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <thread>
+#include <regex>
 #include "pcompare.h"
 #include "passwordComponent.h"
 
@@ -23,6 +24,11 @@ string compare(string passwordToCrack)
 	if (fileCondition == false)
 	{
 		file.open("file.txt");
+		if (!file.is_open())
+		{
+			cout << "File can not be found or opened..." << endl;
+			return "";
+		}
 		fileCondition = true;
 	}
 
@@ -68,6 +74,12 @@ int getList(string listOfP[])
 	int sizeOfList = 0;
 	bool regexCase = true;
 	string tempWord;
+	// regex cap("[A-Z]");
+	// regex allLeters("[a-Z]");
+	regex dig("\d+");
+	// regex specChar("[!\"#$'()*+-./:;<=>?@\[\]\\^_`{|}~]");
+	// regex spcChar("[@_!#$%^&*()<>?/|}{~:]");
+
 	if (file.eof())
 		return -1;
 
@@ -80,6 +92,17 @@ int getList(string listOfP[])
 	for (int i = 0; i < 100; i++)
 	{
 		file >> tempWord;
+		// cout << tempWord << endl;
+
+		// if (regex_match(tempWord, cap))
+		//	cout << "Has Cap Letter" << endl;
+
+		if (regex_match(tempWord, dig))
+			cout << "Has A Digits" << endl;
+
+		// Regex case goes here which determines if it stores
+		// the word to check.
+
 		if (regexCase)// pass regex store to list
 		{
 			listOfP[sizeOfList] = tempWord;
