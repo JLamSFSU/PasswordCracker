@@ -85,11 +85,12 @@ int useAlphabet(void)
 			"****************************\n"
 			"* 0 - No Alphabet Used     *\n"
 			"* 1 - Use Captilze Alphabet*\n"
-			"* 2 - Case Sensitive       *\n"
+			"* 2 - Use Lower Case only  *\n"
+			"* 3 - Case Sensitive       *\n"
 			"****************************\n"
-			"Please Enter 0, 1, or 2: ";
+			"Please Enter 0, 1, 2, or 3: ";
 		cin >> alphabet;
-		if (alphabet >= 0 && alphabet <= 2)
+		if (alphabet >= 0 && alphabet <= 3)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;
 	} while (true);
@@ -132,14 +133,15 @@ int methodToUse(void)
 	do {
 		cout <<
 			"****************************\n"
-			"* Method to find password  *\n"
-			"* 0 - Both                 *\n"
-			"* 1 - Brute force          *\n"
-			"* 2 - File                 *\n"
+			"* Find or Create Password  *\n"
+			"* 0 - Find Using Both      *\n"
+			"* 1 - Find w/ Brute force  *\n"
+			"* 2 - Find w/ File         *\n"
+			"* 3 - Create Password      *\n"
 			"****************************\n"
-			"Please Enter 0, 1, or 2: ";
+			"Please Enter 0, 1, 2, or 3: ";
 		cin >> methodUse;
-		if (methodUse >= 0 && methodUse <= 2)
+		if (methodUse >= 0 && methodUse <= 3)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;
 	} while (true);
