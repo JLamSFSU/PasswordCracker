@@ -42,6 +42,7 @@ string compare(string passwordToCrack)
 			// cout << i <<") Checking: " << myArray[i] << endl;;
 			if (passwordToCrack.compare(myArray[i]) == 0)
 			{
+				cout << "Password is found in database..." << endl;
 				file.close();
 				fileCondition = false;
 				return myArray[i];
