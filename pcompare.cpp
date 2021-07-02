@@ -33,7 +33,6 @@ string compare(string passwordToCrack)
 	}
 
 
-
 	while (true)
 	{
 		sizeOfList = getList(myArray);
@@ -72,13 +71,13 @@ string compare(string passwordToCrack)
 int getList(string listOfP[])
 {
 	int sizeOfList = 0;
-	bool regexCase = true;
 	string tempWord;
-	// regex cap("[A-Z]");
-	regex allLeters("[a-z]+");
-	regex dig("[0-9]+");
-	// regex specChar("[!\"#$'()*+-./:;<=>?@\[\]\\^_`{|}~]");
-	// regex spcChar("[@_!#$%^&*()<>?/|}{~:]");
+	regex cap(".*[a-z]+");
+	regex allLeters(".*[A-Za-z]+");
+	regex dig(".*[0-9]+");
+	// Needs another list of spec chars for specific exclusion
+	regex specChar(".*[!\"#$'()*+-./:;<=>?@^_`{|}~]+");
+	// Above is missing some other spec chars like [, ], and \
 
 	if (file.eof())
 		return -1;
@@ -89,36 +88,50 @@ int getList(string listOfP[])
 		return -1;
 	}
 
-	int excludedWords = 0;
 	for (int i = 0; i < 100; i++)
 	{
 		file >> tempWord;
 
+		// exclusionary conditions
 		if (tempWord.length() < pc.minLength || tempWord.length() > pc.maxLength)
-		{
-			excludedWords++;
 			continue;
-		}
 
-		// if (regex_match(tempWord, cap))
-		//	cout << "Has Cap Letter" << endl;
+		// need to be upgraded to deal with case sensetive.
+		if (pc.alphabet == 0 && regex_match(tempWord, allLeters))
+			continue;
+
+		if (pc.alphabet == 1 && regex_match(tempWord, cap))
+			continue;
+
+		if (pc.numbers == 0 && regex_match(tempWord, dig))
+			continue;
+
+		// needs to include case for special char inclusion
+		if (pc.symbol == 0 && regex_match(tempWord, specChar))
+			continue;
+
+		/*
 		cout << tempWord;
+		if (regex_match(tempWord, cap))
+			cout << " Has lower case Letter";
 		if (regex_match(tempWord, allLeters))
 			cout << " Has A letter";
 		if (regex_match(tempWord, dig))
-			cout << " Has A Digits";
+			cout << " Has A Digit";
+		if (regex_match(tempWord, mix))
+			cout << " mix";
+		if (regex_match(tempWord, specChar))
+			cout << " spec Char";
 		cout << endl;
+		*/
+
 		// Regex case goes here which determines if it stores
 		// the word to check.
 
-		if (regexCase)// pass regex store to list
-		{
-			listOfP[sizeOfList] = tempWord;
-			sizeOfList++;
-		}
+		// pass regex store to list
+		listOfP[sizeOfList] = tempWord;
+		sizeOfList++;
 	}
-
-	// 	cout << "There are " << excludedWords << " excluded words." << endl;
 	
 	return sizeOfList;
 }
