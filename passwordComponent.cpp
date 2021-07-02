@@ -1,6 +1,6 @@
-#include "passwordComponent.h"
 #include <iostream>
-using namespace std;
+#include <string>
+#include "passwordComponent.h"
 
 PasswordComponent::PasswordComponent(void) :
 	minLength(0), maxLength(0),
@@ -29,4 +29,12 @@ void setPC(int minLength, int maxLength,
 		cout << "alphabet " << pc.alphabet << ":" << alphabet << endl;
 		cout << "symbol " << pc.symbol << ":" << symbol << endl;
 	}
+}
+
+string convertToString(char* a, int size)
+{
+	string s = "";
+	for (int i = 0; i < size; i++)
+		s = s + a[i];
+	return s;
 }

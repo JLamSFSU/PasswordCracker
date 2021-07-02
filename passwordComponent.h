@@ -1,4 +1,5 @@
 #pragma once
+using namespace std;
 
 class PasswordComponent
 {
@@ -16,3 +17,5 @@ public:
 extern PasswordComponent pc;
 
 void setPC(int, int, int, int, int);
+
+string convertToString(char*, int);

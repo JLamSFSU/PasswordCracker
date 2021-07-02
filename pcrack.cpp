@@ -6,8 +6,6 @@
 #define NUMBERSONLY 10
 #define ALPHABETONLY 100
 
-string convertToString(char*, int);
-
 int iteratePasswordPosition(char[], int, int, int, int);
 int iterateChar(char[], int, int);
 int expand(char[], int, int, int);
@@ -23,7 +21,7 @@ string cracker(string passwordToCrack)
 	char* passwordArray = new char(pc.maxLength);
 	int size = 0;
 
-	cout << "Running Password Cracker" << endl;
+	// cout << "Running Password Cracker" << endl;
 
 	// init parameters
 	if (pc.numbers == 0 && pc.alphabet == 0 && pc.symbol == 0)
@@ -56,7 +54,7 @@ string cracker(string passwordToCrack)
 		}
 	}
 
-	cout << "type: " << type << endl;
+	// cout << "type: " << type << endl;
 
 	// Initilaze string to compare
 	size = expand(passwordArray, pc.maxLength, pc.minLength - 1, type);
@@ -81,14 +79,6 @@ string cracker(string passwordToCrack)
 		}
 	}
 	return password;
-}
-
-string convertToString(char* a, int size)
-{
-	string s = "";
-	for (int i = 0; i < size; i++)
-		s = s + a[i];
-	return s;
 }
 
 /**

@@ -2,6 +2,7 @@ using namespace std;
 #include "panel.h"
 #include "pcrack.h"
 #include "pcompare.h"
+#include "createp.h"
 
 string passwordToBeFound(void);
 
@@ -30,8 +31,8 @@ int main(void)
 		break;
 	case 3:
 		// method to generate password.
-		// passwordFound =
-		cout << "Option not implemented at this time..." << endl;
+		passwordFound = createPassword();
+		// cout << "Option not implemented at this time..." << endl;
 		break;
 	}
 	if (passwordFound != "")
