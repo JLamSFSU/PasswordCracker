@@ -38,6 +38,8 @@ string cracker(string passwordToCrack)
 		}
 		switch (pc.alphabet)
 		{
+		case 3:
+			type += ALPHABETONLY;
 		case 2:
 			type += ALPHABETONLY;
 		case 1:
@@ -135,7 +137,7 @@ int iteratePasswordPosition(char password[], int maxsize, int size, int position
 			size = iteratePasswordPosition(password, maxsize, size, position - 1, type);
 		else
 			password[position - 1] = iterateChar(password, position - 1, type);
-		if (type == ALPHABETONLY || type >= 100)
+		if (type >= ALPHABETONLY)
 			password[position] = resetPosition(type);
 	}
 	else
@@ -177,12 +179,20 @@ int iterateChar(char password[], int position, int type)
 		case 126:
 			if (type > 2 && type % 100 >= 10)
 				return 48;
+			if (type / 100 == 2)
+				return 97;
 			if (type > 100)
 				return 65;
 		}
 	}
 	if (type > 100 && type % 100 > 0)
 	{
+		if (type / 100 == 2)
+			switch (password[position])
+			{
+			case 57:
+				return 97;
+			}
 		switch (password[position])
 		{
 		case 57:
@@ -218,6 +228,8 @@ int expand(char password[], int maxsize, int size, int type)
 			password[i] = '!';
 		else if (type % 100 > 0)
 			password[i] = '0';
+		else if (type / 100 == 2)
+			password[i] = 'a';
 		else
 			password[i] = 'A';
 	}
@@ -236,6 +248,8 @@ int resetPosition(int type)
 		return 33;
 	else if (type % 100 > 0)
 		return 48;
+	else if (type / 100 == 2)
+		return 97;
 	else
 		return 65;
 }
