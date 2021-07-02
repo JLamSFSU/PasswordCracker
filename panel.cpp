@@ -43,15 +43,9 @@ int mainMenu(void)
 	}
 
 	if (alphabet == 0 && numbers == 0 && symbol == 0)
-	{
 		cout << "Bad Parameters!" << endl;
-	}
 	else
-	{
 		setPC(minLength, maxLength, numbers, alphabet, symbol);
-		// cout << "OG: " << minLength << ", " << maxLength << ", " << numbers << endl;
-		// cout << "PC: " << pc.minLength << ", " << pc.maxLength << ", " << pc.numbers << endl;
-	}
 
 	return methodToUse();
 }
@@ -78,6 +72,7 @@ int useNumbers(void)
 	return numbers;
 }
 
+// needs to be upgraded to have option for lower case only.
 /**
 * Menu for inclusion of alphabet
 * @return 0 no alphabet, 1 none cap sensiteve, 2 cap sensitive
