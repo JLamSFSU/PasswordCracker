@@ -16,6 +16,8 @@ int main(void)
 	case 0:
 		passwordToCrack = passwordToBeFound();
 		passwordFound = compare(passwordToCrack);
+		if (passwordFound != "")
+			break;
 		passwordFound = cracker(passwordToCrack);
 		break;
 	case 1:
@@ -29,6 +31,8 @@ int main(void)
 	case 3:
 		// method to generate password.
 		// passwordFound =
+		cout << "Option not implemented at this time..." << endl;
+		break;
 	}
 	if (passwordFound != "")
 		cout << "Password is: " << passwordFound << endl;
@@ -37,6 +41,7 @@ int main(void)
 
 	do {
 		cout << "\n\nRestart? (1 for yes 0 for no): ";
+		cin.clear();
 		cin >> yn;
 		switch (yn)
 		{
@@ -49,9 +54,6 @@ int main(void)
 			goto START;
 		default:
 			cout << "Bad Entry" << endl;
-			// Below clears out bad entries
-			cin.clear();
-			cin.ignore(INT_MAX);
 		}
 	} while (true);
 	return 0;
