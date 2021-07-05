@@ -18,7 +18,7 @@ string cracker(string passwordToCrack)
 {
 	int type = 0;
 	string password;
-	char* passwordArray = new char(pc.maxLength);
+	char* passwordArray = new char[pc.maxLength];
 	int size = 0;
 
 	// cout << "Running Password Cracker" << endl;
@@ -78,6 +78,7 @@ string cracker(string passwordToCrack)
 			exit(0);
 		}
 	}
+	delete passwordArray;
 	return password;
 }
 
