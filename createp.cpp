@@ -22,6 +22,7 @@ string createPassword(void)
 	int psize = pc.maxLength;
 	char* passwordArray = new char[psize];
 	int* arrayForPasswordType = new int[psize];
+	bool minType[3] = { false };
 	srand(time(0));
 
 	int type = 0;
@@ -41,8 +42,11 @@ string createPassword(void)
 	retry:for (int i = 0; i < psize; i++)
 		arrayForPasswordType[i] = generateType(type);
 	
+	if (((type == 3 || type > 4) && psize < 2) ||
+		(type == 7 && psize < 3))
+		goto create;
+
 	// check there is min of each type
-	bool minType[3] = { false };
 	switch (type)
 	{
 	case 3:
@@ -86,7 +90,7 @@ string createPassword(void)
 	}
 
 	// in the portion below will fill in the rest.
-	for (int i = 0; i < psize; i++)
+	create:for (int i = 0; i < psize; i++)
 		passwordArray[i] = generateChar(arrayForPasswordType[i]);
 	
 	password = convertToString(passwordArray, psize);
