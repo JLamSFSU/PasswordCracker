@@ -6,6 +6,7 @@
 #include "createp.h"
 #include "passwordComponent.h"
 
+int generateType(int);
 char generateChar(int);
 char generateAC(void);
 char generateNum(void);
@@ -37,64 +38,11 @@ string createPassword(void)
 	// if max is greater than the number of availabe types allow
 	// minimillay 1 for each type
 	
-	// cout << "Type: ";
-	int storedValue;
 	retry:for (int i = 0; i < psize; i++)
-	{
-		if (type == 1 || type == 2 || type == 4)
-			arrayForPasswordType[i] = type;
-		else
-		{
-			switch (type)
-			{
-			case 3:
-				if (rand() % 2 == 0)
-					storedValue = 1;
-				else
-					storedValue = 2;
-				break;
-			case 5:
-				if (storedValue == 2 || storedValue == 3)
-				{
-					if (rand() % 2 == 0)
-						storedValue = 1;
-					else
-						storedValue = 4;
-				}
-				break;
-			case 6:
-				if (storedValue == 1 || storedValue == 3)
-				{
-					if (rand() % 2 == 0)
-						storedValue = 2;
-					else
-						storedValue = 4;
-				}
-				break;
-			case 7:
-				switch (rand() % 3)
-				{
-				case 0:
-					storedValue = 1;
-					break;
-				case 1:
-					storedValue = 2;
-					break;
-				case 2:
-					storedValue = 4;
-					break;
-				}
-			}
-			arrayForPasswordType[i] = storedValue;
-		}
-		// cout << arrayForPasswordType[i];
-	}
-	// cout << " ";
-
+		arrayForPasswordType[i] = generateType(type);
+	
 	// check there is min of each type
 	bool minType[3] = { false };
-	bool gotoRety = false;
-
 	switch (type)
 	{
 	case 3:
@@ -116,7 +64,7 @@ string createPassword(void)
 		break;
 	}
 
-	if (type != 1 || type != 2 || type != 4)
+	if (!(type == 1 || type == 2 || type == 4))
 	{
 		for (int i = 0; i < psize; i++)
 		{
@@ -137,18 +85,66 @@ string createPassword(void)
 			goto retry;
 	}
 
-	
-
 	// in the portion below will fill in the rest.
 	for (int i = 0; i < psize; i++)
 		passwordArray[i] = generateChar(arrayForPasswordType[i]);
 	
 	password = convertToString(passwordArray, psize);
 		
-	delete passwordArray;
-	delete arrayForPasswordType;
+	delete[] passwordArray;
+	delete[] arrayForPasswordType;
 	
 	return password;
+}
+
+/**
+* @param type based on type will determin what value to store
+* @return type that is to be stored
+*/
+int generateType(int type)
+{
+	int storedValue = -1;
+	if (type == 1 || type == 2 || type == 4)
+		storedValue = type;
+	else
+	{
+		switch (type)
+		{
+		case 3:
+			if (rand() % 2 == 0)
+				storedValue = 1;
+			else
+				storedValue = 2;
+			break;
+		case 5:
+			if (rand() % 2 == 0)
+				storedValue = 1;
+			else
+				storedValue = 4;
+			break;
+		case 6:
+
+			if (rand() % 2 == 0)
+				storedValue = 2;
+			else
+				storedValue = 4;
+			break;
+		case 7:
+			switch (rand() % 3)
+			{
+			case 0:
+				storedValue = 1;
+				break;
+			case 1:
+				storedValue = 2;
+				break;
+			case 2:
+				storedValue = 4;
+				break;
+			}
+		}
+	}
+	return storedValue;
 }
 
 /**
@@ -159,7 +155,7 @@ string createPassword(void)
 */
 char generateChar(int type)
 {
-	char pchar;
+	char pchar = ' ';
 	switch (type)
 	{
 	case 1:
@@ -212,7 +208,7 @@ char generateNum(void)
 */
 char generateSC(void)
 {
-	int rValue;
+	int rValue = -1;
 
 	// 15 ! - /
 	// 7 : - @
@@ -237,6 +233,6 @@ char generateSC(void)
 			rValue = rand() % 4 + '{';
 			break;
 		}
-		return rValue;
 	}
+	return rValue;
 }

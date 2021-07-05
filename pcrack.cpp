@@ -78,7 +78,7 @@ string cracker(string passwordToCrack)
 			exit(0);
 		}
 	}
-	delete passwordArray;
+	delete[] passwordArray;
 	return password;
 }
 
