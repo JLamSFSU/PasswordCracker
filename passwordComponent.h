@@ -17,7 +17,7 @@ public:
 extern PasswordComponent pc;
 
 // to activate or deactivate debug 
-extern bool debugBool = false;
+extern bool debugBool;
 
 void setPC(int, int, int, int, int);
 

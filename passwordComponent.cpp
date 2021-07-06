@@ -2,6 +2,8 @@
 #include <string>
 #include "passwordComponent.h"
 
+bool debugBool = false;
+
 PasswordComponent::PasswordComponent(void) :
 	minLength(0), maxLength(0),
 	numbers(0), alphabet(0), symbol(0) {}
