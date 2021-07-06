@@ -32,7 +32,6 @@ int main(void)
 	case 3:
 		// method to generate password.
 		passwordFound = createPassword();
-		// cout << "Option not implemented at this time..." << endl;
 		break;
 	}
 	if (passwordFound != "")

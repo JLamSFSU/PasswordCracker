@@ -39,7 +39,7 @@ string compare(string passwordToCrack)
 
 		for (int i = 0; i < sizeOfList; i++)
 		{
-			// cout << i <<") Checking: " << myArray[i] << endl;;
+			if (debugBool) cout << i <<") Checking: " << myArray[i] << endl;;
 			if (passwordToCrack.compare(myArray[i]) == 0)
 			{
 				cout << "Password is found in database..." << endl;
@@ -111,20 +111,19 @@ int getList(string listOfP[])
 		if (pc.symbol == 0 && regex_match(tempWord, specChar))
 			continue;
 
-		/*
-		cout << tempWord;
-		if (regex_match(tempWord, cap))
-			cout << " Has lower case Letter";
-		if (regex_match(tempWord, allLeters))
-			cout << " Has A letter";
-		if (regex_match(tempWord, dig))
-			cout << " Has A Digit";
-		if (regex_match(tempWord, mix))
-			cout << " mix";
-		if (regex_match(tempWord, specChar))
-			cout << " spec Char";
-		cout << endl;
-		*/
+		if (debugBool)
+		{
+			cout << tempWord;
+			if (regex_match(tempWord, cap))
+				cout << " Has lower case Letter";
+			if (regex_match(tempWord, allLeters))
+				cout << " Has A letter";
+			if (regex_match(tempWord, dig))
+				cout << " Has A Digit";
+			if (regex_match(tempWord, specChar))
+				cout << " spec Char";
+			cout << endl;
+		}
 
 		// Regex case goes here which determines if it stores
 		// the word to check.
@@ -133,6 +132,5 @@ int getList(string listOfP[])
 		listOfP[sizeOfList] = tempWord;
 		sizeOfList++;
 	}
-	
 	return sizeOfList;
 }

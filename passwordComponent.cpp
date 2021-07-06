@@ -20,7 +20,7 @@ void setPC(int minLength, int maxLength,
 	pc.alphabet = alphabet;
 	pc.symbol = symbol;
 
-	if (false)
+	if (debugBool)
 	{
 		cout << "Setting PC" << endl;
 		cout << "MinLength " << pc.minLength << ":" << minLength << endl;

@@ -16,6 +16,9 @@ public:
 
 extern PasswordComponent pc;
 
+// to activate or deactivate debug 
+extern bool debugBool = false;
+
 void setPC(int, int, int, int, int);
 
 string convertToString(char*, int);
