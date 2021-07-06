@@ -19,6 +19,8 @@ int mainMenu(void)
 	int minLength, maxLength, numbers, alphabet, symbol;
 	static int returnVal [5] = {0};
 
+	cout << "Please complete the passwords parameters:" << endl;
+
 	do {
 		cout << "The min Length of password: ";
 		cin >> minLength;
@@ -138,10 +140,11 @@ int methodToUse(void)
 			"* 1 - Find w/ Brute force  *\n"
 			"* 2 - Find w/ File         *\n"
 			"* 3 - Create Password      *\n"
+			"* 4 - Check Password       *\n"
 			"****************************\n"
-			"Please Enter 0, 1, 2, or 3: ";
+			"Please Enter 0, 1, 2, 3, or 4: ";
 		cin >> methodUse;
-		if (methodUse >= 0 && methodUse <= 3)
+		if (methodUse >= 0 && methodUse <= 4)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;
 	} while (true);

@@ -3,6 +3,7 @@ using namespace std;
 #include "pcrack.h"
 #include "pcompare.h"
 #include "createp.h"
+#include "pcheck.h"
 
 string passwordToBeFound(void);
 
@@ -33,6 +34,17 @@ int main(void)
 		// method to generate password.
 		passwordFound = createPassword();
 		break;
+	case 4:
+		passwordToCrack = passwordToBeFound();
+		passwordFound = compare(passwordToCrack);
+		if (passwordFound != "")
+		{
+			passwordFound = "Really weak, and is found amongst commonly used password. Please consider a different one.";
+			break;
+		}
+		// method to check security of password
+		passwordFound = checkPassword(passwordToCrack);
+		break;
 	}
 	if (passwordFound != "")
 		cout << "Password is: " << passwordFound << endl;
@@ -51,6 +63,7 @@ int main(void)
 			cout << endl;
 			passwordToCrack.clear();
 			passwordFound.clear();
+			passwordFound = "";
 			goto START;
 		default:
 			cout << "Bad Entry" << endl;
@@ -71,7 +84,7 @@ int main(void)
 string passwordToBeFound()
 {
 	string passwordToCrack;
-	cout << "Enter Password to Crack: ";
+	cout << "Enter Password: ";
 	cin >> passwordToCrack;
 	return passwordToCrack;
 }
