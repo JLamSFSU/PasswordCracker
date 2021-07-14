@@ -28,7 +28,9 @@ bool isSymbol(char);
 */
 string checkPassword(string passwordToCrack)
 {
+	string finalResponse;
 	string response = ""; 
+	int grade = 5;
 	int passwordLength;
 	int maxLength = pc.maxLength;
 	int minLength = pc.minLength;
@@ -66,10 +68,11 @@ string checkPassword(string passwordToCrack)
 	}
 
 	if (minLength != maxLength)
-	{
 		if ((passwordLength - minLength) < (maxLength - passwordLength))
+		{
 			response.append("Should be longer to maxamize security.\n");
-	}
+			grade--;
+		}
 
 	switch (type[PALPHABET])
 	{
@@ -78,9 +81,11 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since Upper is allowed, having at least 1 upper will increase secuirty.\n");
+			grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 upper will increase secuirty.\n");
+			grade--;
 			break;
 		}
 		break;
@@ -89,9 +94,11 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since lower is allowed, having at least 1 lower will increase secuirty.\n");
+			grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 lower will increase secuirty.\n");
+			grade--;
 			break;
 		}
 		break;
@@ -100,9 +107,11 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since Upper is allowed, having 1 at least upper will increase secuirty.\n");
+			grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 upper will increase secuirty.\n");
+			grade--;
 			break;
 		default:
 			break;
@@ -111,9 +120,11 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since lower is allowed, having 1 at least lower will increase secuirty.\n");
+			grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 lower will increase secuirty.\n");
+			grade--;
 			break;
 		}
 	}
@@ -125,8 +136,10 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since Numbers is allowed, having at least 1 number will increase secuirty.\n");
+			grade -= 2;
 		case 1:
 			response.append("Having more than 1 number will increase secuirty.\n");
+			grade--;
 			break;
 		}
 	}
@@ -137,15 +150,46 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since Symbol is allowed, having at lesat 1 symbol will increase secuirty.\n");
+			grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 symbol will increase secuirty.\n");
+			grade--;
 			break;
 		}
 		break;
 	}
 
-	return response;
+	if (grade < 0)
+	{
+		grade = 0;
+	}
+	switch (grade)
+	{
+	case 5:
+		finalResponse = "Amazing Password 5/5:\n";
+		break;
+	case 4:
+		finalResponse = "Great Password 4/5:\n";
+		break;
+	case 3:
+		finalResponse = "Okay Password 3/5\n";
+		break;
+	case 2:
+		finalResponse = "Weak Password 2/5\n";
+		break;
+	case 1:
+		finalResponse = "Bad Password 1/5\n";
+		break;
+	case 0:
+	default:
+		finalResponse = "Horrible Password 0/5\n";
+		break;
+	}
+
+	finalResponse.append(response);
+
+	return finalResponse;
 }
 
 bool isNumber(char c)
