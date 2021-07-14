@@ -47,7 +47,7 @@ int main(void)
 		break;
 	}
 	if (passwordFound != "")
-		cout << "Password is: " << passwordFound << endl;
+		cout << "Password: " << passwordFound << endl;
 	else
 		cout << "Try again..." << endl;
 
