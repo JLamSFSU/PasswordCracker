@@ -106,7 +106,7 @@ string checkPassword(string passwordToCrack)
 		switch (challenge[UPPER])
 		{
 		case 0:
-			response.append("Since Upper is allowed, having 1 at least upper will increase secuirty.\n");
+			response.append("Since Upper is allowed, having at least 1 upper will increase secuirty.\n");
 			grade -= 2;
 			break;
 		case 1:
@@ -119,7 +119,7 @@ string checkPassword(string passwordToCrack)
 		switch (challenge[LOWER])
 		{
 		case 0:
-			response.append("Since lower is allowed, having 1 at least lower will increase secuirty.\n");
+			response.append("Since lower is allowed, having at least 1 lower will increase secuirty.\n");
 			grade -= 2;
 			break;
 		case 1:
@@ -146,6 +146,8 @@ string checkPassword(string passwordToCrack)
 
 	switch (type[PSYMBOLS])
 	{
+	case 2:
+	case 1:
 		switch (challenge[ASYMBOL])
 		{
 		case 0:
@@ -160,10 +162,6 @@ string checkPassword(string passwordToCrack)
 		break;
 	}
 
-	if (grade < 0)
-	{
-		grade = 0;
-	}
 	switch (grade)
 	{
 	case 5:
@@ -181,7 +179,6 @@ string checkPassword(string passwordToCrack)
 	case 1:
 		finalResponse = "Bad Password 1/5\n";
 		break;
-	case 0:
 	default:
 		finalResponse = "Horrible Password 0/5\n";
 		break;
