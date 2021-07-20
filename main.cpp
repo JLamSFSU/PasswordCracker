@@ -4,6 +4,7 @@ using namespace std;
 #include "pcompare.h"
 #include "createp.h"
 #include "pcheck.h"
+#include "pda.h"
 
 string passwordToBeFound(void);
 
@@ -31,10 +32,15 @@ int main(void)
 		passwordFound = compare(passwordToCrack);
 		break;
 	case 3:
+		// Dictionary attack.
+		passwordToCrack = passwordToBeFound();
+		passwordFound = dictionaryAttack(passwordToCrack);
+		break;
+	case 4:
 		// method to generate password.
 		passwordFound = createPassword();
 		break;
-	case 4:
+	case 5:
 		passwordToCrack = passwordToBeFound();
 		passwordFound = compare(passwordToCrack);
 		if (passwordFound != "")

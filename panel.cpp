@@ -139,12 +139,13 @@ int methodToUse(void)
 			"* 0 - Find Using Both      *\n"
 			"* 1 - Find w/ Brute force  *\n"
 			"* 2 - Find w/ File         *\n"
-			"* 3 - Create Password      *\n"
-			"* 4 - Check Password       *\n"
+			"* 3 - Find w/ Dictionary   *\n"
+			"* 4 - Create Password      *\n"
+			"* 5 - Check Password       *\n"
 			"****************************\n"
-			"Please Enter 0, 1, 2, 3, or 4: ";
+			"Please Enter a number above: ";
 		cin >> methodUse;
-		if (methodUse >= 0 && methodUse <= 4)
+		if (methodUse >= 0 && methodUse <= 5)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;
 	} while (true);
