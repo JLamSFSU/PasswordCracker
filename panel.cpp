@@ -1,3 +1,4 @@
+#include <string>
 #include "panel.h"
 #include "pcrack.h"
 #include "passwordComponent.h"
@@ -16,6 +17,8 @@ PasswordComponent pc = PasswordComponent();
 */
 int mainMenu(void)
 {
+	string trashbin, userInput;
+	std::string::size_type sz;
 	int minLength, maxLength, numbers, alphabet, symbol;
 	static int returnVal [5] = {0};
 
@@ -23,9 +26,29 @@ int mainMenu(void)
 
 	do {
 		cout << "The min Length of password: ";
-		cin >> minLength;
+		cin >> userInput;
+		getline(cin, trashbin);
+		try 
+		{
+			minLength = stoi(userInput, &sz);
+		}
+		catch (invalid_argument& e)
+		{
+			continue;
+		}
+
 		cout << "The max Length of password: ";
-		cin >> maxLength;
+		cin >> userInput;
+		getline(cin, trashbin);
+		try
+		{
+			maxLength = stoi(userInput, &sz);
+		}
+		catch (invalid_argument& e)
+		{
+			continue;
+		}
+
 		if (minLength <= maxLength && minLength > 0)
 			break;
 		cout << "Password Max can not be less than Min length.\nPlease Try Again" << endl;
@@ -58,6 +81,8 @@ int mainMenu(void)
 */
 int useNumbers(void)
 {
+	string trashbin, userInput;
+	std::string::size_type sz;
 	int numbers = 0;
 	do {
 		cout <<
@@ -66,7 +91,16 @@ int useNumbers(void)
 			"* 1 - Use Numbers          *\n"
 			"****************************\n"
 			"Please Enter 0 or 1: ";
-		cin >> numbers;
+		cin >> userInput;
+		getline(cin, trashbin);
+		try
+		{
+			numbers = stoi(userInput, &sz);
+		}
+		catch (invalid_argument& e)
+		{
+			continue;
+		}
 		if (numbers == 0 || numbers == 1)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;
@@ -81,6 +115,8 @@ int useNumbers(void)
 */
 int useAlphabet(void)
 {
+	string trashbin, userInput;
+	std::string::size_type sz;
 	int alphabet = 0;
 	do {
 		cout <<
@@ -91,7 +127,16 @@ int useAlphabet(void)
 			"* 3 - Case Sensitive       *\n"
 			"****************************\n"
 			"Please Enter 0, 1, 2, or 3: ";
-		cin >> alphabet;
+		cin >> userInput;
+		getline(cin, trashbin);
+		try
+		{
+			alphabet = stoi(userInput, &sz);
+		}
+		catch (invalid_argument& e)
+		{
+			continue;
+		}
 		if (alphabet >= 0 && alphabet <= 3)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;
@@ -105,6 +150,8 @@ int useAlphabet(void)
 */
 int useSpecialChar(void)
 {
+	string trashbin, userInput;
+	std::string::size_type sz;
 	int symbol = 0;
 	do {
 		cout <<
@@ -117,7 +164,16 @@ int useSpecialChar(void)
 			"*   this time.             *\n"
 			"****************************\n"
 			"Please Enter 0, 1, or 2: ";
-		cin >> symbol;
+		cin >> userInput;
+		getline(cin, trashbin);
+		try
+		{
+			symbol = stoi(userInput, &sz);
+		}
+		catch (invalid_argument& e)
+		{
+			continue;
+		}
 		if (symbol >= 0 && symbol <= 2)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;
@@ -131,6 +187,8 @@ int useSpecialChar(void)
 */
 int methodToUse(void)
 {
+	string trashbin, userInput;
+	std::string::size_type sz;
 	int methodUse = 0;
 	do {
 		cout <<
@@ -144,7 +202,16 @@ int methodToUse(void)
 			"* 5 - Check Password       *\n"
 			"****************************\n"
 			"Please Enter a number above: ";
-		cin >> methodUse;
+		cin >> userInput;
+		getline(cin, trashbin);
+		try
+		{
+			methodUse = stoi(userInput, &sz);
+		}
+		catch (invalid_argument& e)
+		{
+			continue;
+		}
 		if (methodUse >= 0 && methodUse <= 5)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;

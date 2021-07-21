@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <vector>
 #include <regex>
@@ -18,19 +19,29 @@ string dictionaryAttack(string passwordToCrack)
 	vector <string> userData;
 	string wordToEnter;
 	string finalWord;
+	string tempword;
 	// collect user data
 	while (true)
 	{
+		cin.clear();
 		wordToEnter = collectDataMenu();
 		if (wordToEnter.compare("&&&") == 0)
 			break;
-		userData.push_back(wordToEnter);
+		stringstream ss(wordToEnter);
+		while (getline(ss, tempword, ' '))
+			userData.push_back(tempword);
 	}
 
 	// password generation
 
 	// generate passwords and compare
 	finalWord = wordToEnter;
+
+	cout << "User Data:" << endl;
+	for (int i = 0; i < userData.size(); i++)
+	{
+		cout << userData[i] << endl;
+	}
 
 	return finalWord;
 }
@@ -43,8 +54,10 @@ string dictionaryAttack(string passwordToCrack)
 string collectDataMenu()
 {
 	string returnword;
-	cout << "Please enter the word you wish to enter into the dictionary\n"
+	string trashbin;
+	cout << "Please enter a word or number you wish to enter into the dictionary\n"
 		"(Enter &&& to stop): ";
 	cin >> returnword;
+	getline(cin, trashbin);
 	return returnword;
 }

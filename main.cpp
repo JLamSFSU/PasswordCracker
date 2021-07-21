@@ -1,4 +1,6 @@
 using namespace std;
+#include <iostream>
+#include <string>
 #include "panel.h"
 #include "pcrack.h"
 #include "pcompare.h"
@@ -12,6 +14,7 @@ int main(void)
 {
 	string passwordToCrack;
 	string passwordFound;
+	string trashbin;
 	char yn;
 
 	START:switch (mainMenu())
@@ -59,8 +62,8 @@ int main(void)
 
 	do {
 		cout << "\n\nRestart? (1 for yes 0 for no): ";
-		cin.clear();
 		cin >> yn;
+		getline(cin, trashbin);
 		switch (yn)
 		{
 		case '0':
@@ -90,7 +93,9 @@ int main(void)
 string passwordToBeFound()
 {
 	string passwordToCrack;
+	string trashbin;
 	cout << "Enter Password: ";
 	cin >> passwordToCrack;
+	getline(cin, trashbin);
 	return passwordToCrack;
 }
