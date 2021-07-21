@@ -16,11 +16,23 @@ string collectDataMenu(void);
 string dictionaryAttack(string passwordToCrack)
 {
 	vector <string> userData;
+	string wordToEnter;
+	string finalWord;
 	// collect user data
+	while (true)
+	{
+		wordToEnter = collectDataMenu();
+		if (wordToEnter.compare("&&&") == 0)
+			break;
+		userData.push_back(wordToEnter);
+	}
 
 	// password generation
+
 	// generate passwords and compare
-	return "";
+	finalWord = wordToEnter;
+
+	return finalWord;
 }
 
 /**
@@ -30,5 +42,9 @@ string dictionaryAttack(string passwordToCrack)
 */
 string collectDataMenu()
 {
-	return "";
+	string returnword;
+	cout << "Please enter the word you wish to enter into the dictionary\n"
+		"(Enter &&& to stop): ";
+	cin >> returnword;
+	return returnword;
 }
