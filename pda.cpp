@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
-#include <sstream>
-#include <fstream>
+// #include <fstream>
 #include <vector>
 #include <regex>
 #include "pda.h"
@@ -17,19 +16,21 @@ string collectDataMenu(void);
 string dictionaryAttack(string passwordToCrack)
 {
 	vector <string> userData;
-	string wordToEnter;
-	string finalWord;
-	string tempword;
+	string wordToEnter, finalWord;
 	// collect user data
 	while (true)
 	{
-		cin.clear();
 		wordToEnter = collectDataMenu();
 		if (wordToEnter.compare("&&&") == 0)
 			break;
-		stringstream ss(wordToEnter);
-		while (getline(ss, tempword, ' '))
-			userData.push_back(tempword);
+		if (wordToEnter.compare("%%%") == 0)
+		{
+			cout << "Current Dictionary:" << endl;
+			for (int i = 0; i < userData.size(); i++)
+				cout << i + 1 << " - " << userData[i] << endl;
+			continue;
+		}
+		userData.push_back(wordToEnter);
 	}
 
 	// password generation
@@ -37,12 +38,7 @@ string dictionaryAttack(string passwordToCrack)
 	// generate passwords and compare
 	finalWord = wordToEnter;
 
-	cout << "User Data:" << endl;
-	for (int i = 0; i < userData.size(); i++)
-	{
-		cout << userData[i] << endl;
-	}
-
+	// return match
 	return finalWord;
 }
 
@@ -56,7 +52,7 @@ string collectDataMenu()
 	string returnword;
 	string trashbin;
 	cout << "Please enter a word or number you wish to enter into the dictionary\n"
-		"(Enter &&& to stop): ";
+		"(Enter &&& to stop or %%% to view current list): ";
 	cin >> returnword;
 	getline(cin, trashbin);
 	return returnword;
