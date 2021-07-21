@@ -17,6 +17,8 @@ string dictionaryAttack(string passwordToCrack)
 {
 	vector <string> userData;
 	string wordToEnter, finalWord;
+	int userDataSize, datacombo;
+	int maxLength = pc.maxLength;
 	// collect user data
 	while (true)
 	{
@@ -32,11 +34,59 @@ string dictionaryAttack(string passwordToCrack)
 		}
 		userData.push_back(wordToEnter);
 	}
+	
+	// remove from list that does not meet the requirements
+	// such as exceeding max length or having numbers when
+	// numbers are not allowed.
+	int iteration = 0;
+	while (true)
+	{
+		// deals with length
+		if (userData[iteration].length() > maxLength)
+		{
+			userData.erase(userData.begin() + iteration);
+			continue;
+		}
+		
+		// deals with alphabet
+		/*
+		* psuedo:
+		* if alphabet is not allowed
+		* if word contains alphabet remove
+		* 
+		* "might need to do something that varies the
+		* cap sensitivity here as well if cap sensitivity
+		* is active."
+		*/
+		// if (userData[i])
+
+		// deals with numbers
+		/*
+		* if numbers is not allowed
+		* if string contains numbers remove
+		*/
+
+		// deals with symbols
+		/*
+		* if symbols is not allowed
+		* "might need to do two conditional one for all and one for special"
+		* if string contains symbols remove
+		*/
+
+		// iterator or break;
+		if (iteration < userData.size() - 1)
+			iteration++;
+		else
+			break;
+	}
 
 	// password generation
+	userDataSize = userData.size();
+
 
 	// generate passwords and compare
 	finalWord = wordToEnter;
+
 
 	// return match
 	return finalWord;
