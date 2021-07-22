@@ -71,6 +71,8 @@ string compare(string passwordToCrack)
 */
 int getList(string listOfP[])
 {
+	int type[3] = { pc.alphabet, pc.numbers, pc.symbol };
+
 	int sizeOfList = 0;
 	string tempWord;
 	regex cap(".*[a-z]+");
@@ -98,17 +100,17 @@ int getList(string listOfP[])
 			continue;
 
 		// need to be upgraded to deal with case sensetive.
-		if (pc.alphabet == 0 && regex_match(tempWord, allLeters))
+		if (type[0] == 0 && regex_match(tempWord, allLeters))
 			continue;
 
-		if (pc.alphabet == 1 && regex_match(tempWord, cap))
+		if (type[0] == 1 && regex_match(tempWord, cap))
 			continue;
 
-		if (pc.numbers == 0 && regex_match(tempWord, dig))
+		if (type[1] == 0 && regex_match(tempWord, dig))
 			continue;
 
 		// needs to include case for special char inclusion
-		if (pc.symbol == 0 && regex_match(tempWord, specChar))
+		if (type[2] && regex_match(tempWord, specChar))
 			continue;
 
 		if (debugBool)
