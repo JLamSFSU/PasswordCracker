@@ -80,7 +80,6 @@ string dictionaryAttack(string passwordToCrack)
 				!regex_match(userData[iteration], specChar)))
 		{
 			numberAsInt = stoi(userData[iteration], &sz);
-			cout << "The number: " << numberAsInt << endl;
 			if (numberAsInt <= 12 && numberAsInt >= 0)
 				userData.push_back(digitToWord(numberAsInt));
 		}
