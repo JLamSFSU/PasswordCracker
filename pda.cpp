@@ -7,6 +7,7 @@
 #include "passwordComponent.h"
 
 string collectDataMenu(void);
+string digitToWord(int);
 // string varyDataCollected(string);
 
 /**
@@ -18,7 +19,22 @@ string dictionaryAttack(string passwordToCrack)
 	vector <string> userData;
 	string wordToEnter, finalWord;
 	int userDataSize, datacombo;
+	int type[3] = { pc.alphabet, pc.numbers, pc.symbol };
 	int maxLength = pc.maxLength;
+
+	bool doNotRemoveWord = true;
+
+
+	std::string::size_type sz;
+	int numberAsInt;
+
+	regex cap(".*[a-z]+");
+	regex allLeters(".*[A-Za-z]+");
+	regex dig(".*[0-9]+");
+	// Needs another list of spec chars for specific exclusion
+	regex specChar(".*[!\"#$'()*+-./:;<=>?@^_`{|}~]+");
+	// Above is missing some other spec chars like [, ], and \
+
 	// collect user data
 	while (true)
 	{
@@ -40,14 +56,7 @@ string dictionaryAttack(string passwordToCrack)
 	// numbers are not allowed.
 	int iteration = 0;
 	while (true)
-	{
-		// deals with length
-		if (userData[iteration].length() > maxLength)
-		{
-			userData.erase(userData.begin() + iteration);
-			continue;
-		}
-		
+	{		
 		// deals with alphabet
 		/*
 		* psuedo:
@@ -65,6 +74,19 @@ string dictionaryAttack(string passwordToCrack)
 		* if numbers is not allowed
 		* if string contains numbers remove
 		*/
+		// turn number to words (i.e. 1 -> one)
+		if (type[0] > 0 && regex_match(userData[iteration], dig) &&
+			(!regex_match(userData[iteration], allLeters) ||
+				!regex_match(userData[iteration], specChar)))
+		{
+			numberAsInt = stoi(userData[iteration], &sz);
+			cout << "The number: " << numberAsInt << endl;
+			if (numberAsInt <= 12 && numberAsInt >= 0)
+				userData.push_back(digitToWord(numberAsInt));
+		}
+
+		if (doNotRemoveWord && type[1] == 0 && regex_match(userData[iteration], dig))
+			doNotRemoveWord = false;
 
 		// deals with symbols
 		/*
@@ -72,6 +94,19 @@ string dictionaryAttack(string passwordToCrack)
 		* "might need to do two conditional one for all and one for special"
 		* if string contains symbols remove
 		*/
+		if (doNotRemoveWord && type[2] == 0 && regex_match(userData[iteration], specChar))
+			doNotRemoveWord = false;
+
+		// deals with length
+		if (doNotRemoveWord && userData[iteration].length() > maxLength)
+			doNotRemoveWord = false;
+
+		if (!doNotRemoveWord)
+		{
+			userData.erase(userData.begin() + iteration);
+			doNotRemoveWord = true;
+			continue;
+		}
 
 		// iterator or break;
 		if (iteration < userData.size() - 1)
@@ -87,6 +122,12 @@ string dictionaryAttack(string passwordToCrack)
 	// generate passwords and compare
 	finalWord = wordToEnter;
 
+	if (true) // debugbool later
+	{
+		cout << "Dictionary before exit:" << endl;
+		for (int i = 0; i < userDataSize; i++)
+			cout << userData[i] << endl;
+	}
 
 	// return match
 	return finalWord;
@@ -106,4 +147,65 @@ string collectDataMenu()
 	cin >> returnword;
 	getline(cin, trashbin);
 	return returnword;
+}
+
+/**
+* Currently only works for sex case of 0-12.
+* Needs to be upgraded for more cases somehow.
+* @param number the number that is to convert to the word version
+* @return the word version of the number
+*/
+string digitToWord(int number)
+{
+	string digit;
+	
+	switch (number)
+	{
+	case 0:
+		digit = "zero";
+		break;
+	case 1:
+		digit = "one";
+		break;
+	case 2:
+		digit = "two";
+		break;
+	case 3:
+		digit = "three";
+		break;
+	case 4:
+		digit = "four";
+		break;
+	case 5:
+		digit = "five";
+		break;
+	case 6:
+		digit = "six";
+		break;
+	case 7:
+		digit = "seven";
+		break;
+	case 8:
+		digit = "eight";
+		break;
+	case 9:
+		digit = "nine";
+		break;
+	case 10:
+		digit = "ten";
+		break;
+	case 11:
+		digit = "eleven";
+		break;
+	case 12:
+		digit = "twelve";
+		break;
+
+	default:
+		digit = "";
+		break;
+	}
+	
+
+	return digit;
 }
