@@ -11,7 +11,8 @@ string digitToWord(int);
 // string varyDataCollected(string);
 
 int buildDictionary(vector <string> &words);
-int manualInputDictionary(vector <string>& words);
+int manualInputDictionary(vector <string> &words);
+int removeFromDictionary(vector <string> &words);
 
 ifstream dictionaryImport;
 
@@ -22,20 +23,8 @@ ifstream dictionaryImport;
 string dictionaryAttack(string passwordToCrack)
 {
 	vector <string> userData;
-	std::string::size_type sz;
 	string finalWord;
-	int userDataSize, datacombo, numberAsInt;
-	int type[3] = { pc.alphabet, pc.numbers, pc.symbol };
-	int maxLength = pc.maxLength;
-
-	bool doNotRemoveWord = true;
-
-	regex cap(".*[a-z]+");
-	regex allLeters(".*[A-Za-z]+");
-	regex dig(".*[0-9]+");
-	// Needs another list of spec chars for specific exclusion
-	regex specChar(".*[!\"#$'()*+-./:;<=>?@^_`{|}~]+");
-	// Above is missing some other spec chars like [, ], and \
+	int userDataSize, datacombo;
 
 	// import part of the dictionary using a file
 	if (buildDictionary(userData) == -1)
@@ -45,74 +34,14 @@ string dictionaryAttack(string passwordToCrack)
 	if (manualInputDictionary(userData) == -1)
 		exit(-1);
 	
-	// remove from list that does not meet the requirements
-	// such as exceeding max length or having numbers when
-	// numbers are not allowed.
-	int iteration = 0;
-	while (true)
-	{		
-		if (iteration >= userData.size())
-			break;
-		// deals with alphabet
-		/*
-		* psuedo:
-		* if alphabet is not allowed
-		* if word contains alphabet remove
-		* 
-		* "might need to do something that varies the
-		* cap sensitivity here as well if cap sensitivity
-		* is active."
-		*/
-		// if (userData[i])
-
-		// deals with numbers
-		/*
-		* if numbers is not allowed
-		* if string contains numbers remove
-		*/
-		// turn number to words (i.e. 1 -> one)
-		if (type[0] > 0 && regex_match(userData[iteration], dig) &&
-			(!regex_match(userData[iteration], allLeters) ||
-				!regex_match(userData[iteration], specChar)))
-		{
-			numberAsInt = stoi(userData[iteration], &sz);
-			if (numberAsInt <= 12 && numberAsInt >= 0)
-				userData.push_back(digitToWord(numberAsInt));
-		}
-
-		if (doNotRemoveWord && type[1] == 0 && regex_match(userData[iteration], dig))
-			doNotRemoveWord = false;
-
-		// deals with symbols
-		/*
-		* if symbols is not allowed
-		* "might need to do two conditional one for all and one for special"
-		* if string contains symbols remove
-		*/
-		if (doNotRemoveWord && type[2] == 0 && regex_match(userData[iteration], specChar))
-			doNotRemoveWord = false;
-
-		// deals with length
-		if (doNotRemoveWord && userData[iteration].length() > maxLength)
-			doNotRemoveWord = false;
-
-		if (!doNotRemoveWord)
-		{
-			userData.erase(userData.begin() + iteration);
-			doNotRemoveWord = true;
-			continue;
-		}
-
-		// iterator or break;
-		if (iteration < userData.size() - 1)
-			iteration++;
-		else
-			break;
-	}
+	// remove from list
+	if (removeFromDictionary(userData) == -1)
+		exit(-1);
 
 	// password generation
 	userDataSize = userData.size();
 
+	// remove from list again.
 
 	// generate passwords and compare
 	finalWord = userData[0];
@@ -223,6 +152,93 @@ int manualInputDictionary(vector <string>& words)
 			continue;
 		}
 		words.push_back(wordToEnter);
+	}
+	return 0;
+}
+
+/**
+* remove from list that does not meet the requirements
+* such as exceeding max length or having numbers when
+* numbers are not allowed.
+* @param words the dictionary vector to be added to
+* @return error code
+*/
+int removeFromDictionary(vector <string>& words)
+{
+	std::string::size_type sz;
+	int type[3] = { pc.alphabet, pc.numbers, pc.symbol };
+	int numberAsInt;
+	int maxLength = pc.maxLength;
+	int iteration = 0;
+
+	bool doNotRemoveWord = true;
+
+	regex cap(".*[a-z]+");
+	regex allLeters(".*[A-Za-z]+");
+	regex dig(".*[0-9]+");
+	// Needs another list of spec chars for specific exclusion
+	regex specChar(".*[!\"#$'()*+-./:;<=>?@^_`{|}~]+");
+	// Above is missing some other spec chars like [, ], and \
+
+	while (true)
+	{
+		if (iteration >= words.size())
+			break;
+		// deals with alphabet
+		/*
+		* psuedo:
+		* if alphabet is not allowed
+		* if word contains alphabet remove
+		*
+		* "might need to do something that varies the
+		* cap sensitivity here as well if cap sensitivity
+		* is active."
+		*/
+		// if (userData[i])
+
+		// deals with numbers
+		/*
+		* if numbers is not allowed
+		* if string contains numbers remove
+		*/
+		// turn number to words (i.e. 1 -> one)
+		if (type[0] > 0 && regex_match(words[iteration], dig) &&
+			(!regex_match(words[iteration], allLeters) ||
+				!regex_match(words[iteration], specChar)))
+		{
+			numberAsInt = stoi(words[iteration], &sz);
+			if (numberAsInt <= 12 && numberAsInt >= 0)
+				words.push_back(digitToWord(numberAsInt));
+		}
+
+		if (doNotRemoveWord && type[1] == 0 && regex_match(words[iteration], dig))
+			doNotRemoveWord = false;
+
+		// deals with symbols
+		/*
+		* if symbols is not allowed
+		* "might need to do two conditional one for all and one for special"
+		* if string contains symbols remove
+		*/
+		if (doNotRemoveWord && type[2] == 0 && regex_match(words[iteration], specChar))
+			doNotRemoveWord = false;
+
+		// deals with length
+		if (doNotRemoveWord && words[iteration].length() > maxLength)
+			doNotRemoveWord = false;
+
+		if (!doNotRemoveWord)
+		{
+			words.erase(words.begin() + iteration);
+			doNotRemoveWord = true;
+			continue;
+		}
+
+		// iterator or break;
+		if (iteration < words.size() - 1)
+			iteration++;
+		else
+			break;
 	}
 	return 0;
 }
