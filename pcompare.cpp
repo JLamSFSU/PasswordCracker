@@ -7,7 +7,7 @@
 #include "passwordComponent.h"
 
 int getList(string[]);
-bool fileCondition = false;
+bool pcompareFileCondition = false;
 ifstream file;
 
 /**
@@ -21,7 +21,7 @@ string compare(string passwordToCrack)
 	string myArray[100];
 	int sizeOfList;
 
-	if (fileCondition == false)
+	if (pcompareFileCondition == false)
 	{
 		file.open("file.txt");
 		if (!file.is_open())
@@ -29,7 +29,7 @@ string compare(string passwordToCrack)
 			cout << "File can not be found or opened..." << endl;
 			return "";
 		}
-		fileCondition = true;
+		pcompareFileCondition = true;
 	}
 
 
@@ -44,7 +44,7 @@ string compare(string passwordToCrack)
 			{
 				cout << "Password is found in database..." << endl;
 				file.close();
-				fileCondition = false;
+				pcompareFileCondition = false;
 				return myArray[i];
 			}
 		}
@@ -53,7 +53,7 @@ string compare(string passwordToCrack)
 		{
 			cout << "Password can not be found in list..." << endl;
 			file.close();
-			fileCondition = false;
+			pcompareFileCondition = false;
 			return "";
 		}
 	}

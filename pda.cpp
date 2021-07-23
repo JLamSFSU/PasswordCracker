@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-// #include <fstream>
+#include <fstream>
 #include <vector>
 #include <regex>
 #include "pda.h"
@@ -10,6 +10,9 @@ string collectDataMenu(void);
 string digitToWord(int);
 // string varyDataCollected(string);
 
+bool pdaFileCondition = false;
+ifstream dictionaryImport;
+
 /**
 * https://cybernews.com/best-password-managers/password-cracking-techniques/
 * #5 & #6 as refernce for function.
@@ -17,13 +20,13 @@ string digitToWord(int);
 string dictionaryAttack(string passwordToCrack)
 {
 	vector <string> userData;
-	string wordToEnter, finalWord;
+	string wordToEnter, finalWord, trashbin, userInput;
 	int userDataSize, datacombo;
 	int type[3] = { pc.alphabet, pc.numbers, pc.symbol };
 	int maxLength = pc.maxLength;
 
 	bool doNotRemoveWord = true;
-
+	// bool AddToDictionary;
 
 	std::string::size_type sz;
 	int numberAsInt;
@@ -35,7 +38,40 @@ string dictionaryAttack(string passwordToCrack)
 	regex specChar(".*[!\"#$'()*+-./:;<=>?@^_`{|}~]+");
 	// Above is missing some other spec chars like [, ], and \
 
-	// collect user data
+	// import part of the dictionary using a file
+	while (true)
+	{
+		cout << "Would you like to import part of the dictionary? (y/n) ";
+		cin >> userInput;
+		getline(cin, trashbin);
+		if (userInput.compare("y") == 0)
+		{
+			// import file here;
+			if (pdaFileCondition == false)
+			{
+				dictionaryImport.open("dictionary.txt");
+				if (!dictionaryImport.is_open())
+				{
+					cout << "Dictionary can not be found or opened..." << endl;
+					return "";
+				}
+				pdaFileCondition = true;
+			}
+			
+			while (!dictionaryImport.eof())
+			{
+				dictionaryImport >> wordToEnter;
+				userData.push_back(wordToEnter);
+			}
+			dictionaryImport.close();
+			pdaFileCondition = false;
+			break;
+		}
+		if (userInput.compare("n") == 0)
+			break;
+	}
+	
+	// collect user manual input data
 	while (true)
 	{
 		wordToEnter = collectDataMenu();
@@ -149,62 +185,15 @@ string collectDataMenu()
 }
 
 /**
-* Currently only works for sex case of 0-12.
+* Currently only works for some case of 0-12.
 * Needs to be upgraded for more cases somehow.
 * @param number the number that is to convert to the word version
 * @return the word version of the number
 */
 string digitToWord(int number)
 {
-	string digit;
-	
-	switch (number)
-	{
-	case 0:
-		digit = "zero";
-		break;
-	case 1:
-		digit = "one";
-		break;
-	case 2:
-		digit = "two";
-		break;
-	case 3:
-		digit = "three";
-		break;
-	case 4:
-		digit = "four";
-		break;
-	case 5:
-		digit = "five";
-		break;
-	case 6:
-		digit = "six";
-		break;
-	case 7:
-		digit = "seven";
-		break;
-	case 8:
-		digit = "eight";
-		break;
-	case 9:
-		digit = "nine";
-		break;
-	case 10:
-		digit = "ten";
-		break;
-	case 11:
-		digit = "eleven";
-		break;
-	case 12:
-		digit = "twelve";
-		break;
+	vector <string> list = { "zero", "one", "two", "three", "four", "five", "six",
+							"seven", "eight", "nine", "ten", "eleven", "twelve" };
 
-	default:
-		digit = "";
-		break;
-	}
-	
-
-	return digit;
+	return list[number];
 }
