@@ -10,7 +10,9 @@ string collectDataMenu(void);
 string digitToWord(int);
 // string varyDataCollected(string);
 
-bool pdaFileCondition = false;
+int buildDictionary(vector <string> &words);
+int manualInputDictionary(vector <string>& words);
+
 ifstream dictionaryImport;
 
 /**
@@ -20,16 +22,13 @@ ifstream dictionaryImport;
 string dictionaryAttack(string passwordToCrack)
 {
 	vector <string> userData;
-	string wordToEnter, finalWord, trashbin, userInput;
-	int userDataSize, datacombo;
+	std::string::size_type sz;
+	string finalWord;
+	int userDataSize, datacombo, numberAsInt;
 	int type[3] = { pc.alphabet, pc.numbers, pc.symbol };
 	int maxLength = pc.maxLength;
 
 	bool doNotRemoveWord = true;
-	// bool AddToDictionary;
-
-	std::string::size_type sz;
-	int numberAsInt;
 
 	regex cap(".*[a-z]+");
 	regex allLeters(".*[A-Za-z]+");
@@ -39,53 +38,12 @@ string dictionaryAttack(string passwordToCrack)
 	// Above is missing some other spec chars like [, ], and \
 
 	// import part of the dictionary using a file
-	while (true)
-	{
-		cout << "Would you like to import part of the dictionary? (y/n) ";
-		cin >> userInput;
-		getline(cin, trashbin);
-		if (userInput.compare("y") == 0)
-		{
-			// import file here;
-			if (pdaFileCondition == false)
-			{
-				dictionaryImport.open("dictionary.txt");
-				if (!dictionaryImport.is_open())
-				{
-					cout << "Dictionary can not be found or opened..." << endl;
-					return "";
-				}
-				pdaFileCondition = true;
-			}
-			
-			while (!dictionaryImport.eof())
-			{
-				dictionaryImport >> wordToEnter;
-				userData.push_back(wordToEnter);
-			}
-			dictionaryImport.close();
-			pdaFileCondition = false;
-			break;
-		}
-		if (userInput.compare("n") == 0)
-			break;
-	}
-	
+	if (buildDictionary(userData) == -1)
+		exit(-1);
+
 	// collect user manual input data
-	while (true)
-	{
-		wordToEnter = collectDataMenu();
-		if (wordToEnter.compare("&&&") == 0)
-			break;
-		if (wordToEnter.compare("%%%") == 0)
-		{
-			cout << "Current Dictionary:" << endl;
-			for (int i = 0; i < userData.size(); i++)
-				cout << i + 1 << " - " << userData[i] << endl;
-			continue;
-		}
-		userData.push_back(wordToEnter);
-	}
+	if (manualInputDictionary(userData) == -1)
+		exit(-1);
 	
 	// remove from list that does not meet the requirements
 	// such as exceeding max length or having numbers when
@@ -93,6 +51,8 @@ string dictionaryAttack(string passwordToCrack)
 	int iteration = 0;
 	while (true)
 	{		
+		if (iteration >= userData.size())
+			break;
 		// deals with alphabet
 		/*
 		* psuedo:
@@ -155,7 +115,7 @@ string dictionaryAttack(string passwordToCrack)
 
 
 	// generate passwords and compare
-	finalWord = wordToEnter;
+	finalWord = userData[0];
 
 	if (true) // debugbool later
 	{
@@ -196,4 +156,73 @@ string digitToWord(int number)
 							"seven", "eight", "nine", "ten", "eleven", "twelve" };
 
 	return list[number];
+}
+
+/**
+* @param words the dictionary to be added to
+* @return error code
+*/
+int buildDictionary(vector <string> &words)
+{
+	string wordToEnter, userInput, trashbin;
+
+	while (true)
+	{
+		cout << "Would you like to import part of the dictionary? (y/n) ";
+		cin >> userInput;
+		getline(cin, trashbin);
+		if (userInput.compare("y") == 0)
+			break;
+		if (userInput.compare("n") == 0)
+			return 0;
+	}
+
+	// import file here;
+	dictionaryImport.open("dictionary.txt");
+	if (!dictionaryImport.is_open())
+	{
+		cout << "Dictionary can not be found or opened..." << endl;
+		return -1;
+	}
+
+	while (true)
+	{
+		dictionaryImport >> wordToEnter;
+		words.push_back(wordToEnter);
+		if (dictionaryImport.eof())
+			break;
+	}
+	
+	dictionaryImport.close();
+	if (dictionaryImport.is_open())
+	{
+		cout << "Issue closing file..." << endl;
+		return -1;
+	}
+		
+	return 0;
+}
+
+/**
+* @param words the dictionary vector to be added to
+* @return error code
+*/
+int manualInputDictionary(vector <string>& words)
+{
+	string wordToEnter;
+	while (true)
+	{
+		wordToEnter = collectDataMenu();
+		if (wordToEnter.compare("&&&") == 0)
+			break;
+		if (wordToEnter.compare("%%%") == 0)
+		{
+			cout << "Current Dictionary:" << endl;
+			for (int i = 0; i < words.size(); i++)
+				cout << i + 1 << " - " << words[i] << endl;
+			continue;
+		}
+		words.push_back(wordToEnter);
+	}
+	return 0;
 }
