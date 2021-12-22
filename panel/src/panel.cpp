@@ -1,36 +1,45 @@
+/******************************************************************************
+ * Project: Password Program
+ * Author:  Justin Lam
+ * 
+ * File: panel.c
+ * 
+ * Description: Generate user interface for user
+ *****************************************************************************/
+
 #include <string>
-#include "panel.h"
-#include "pcrack.h"
-#include "passwordComponent.h"
+#include "../include/panel.h"
+#include "../../password_component/include/password_component.h"
+#include "../../password_finder/include/password_crack.h"
 
-int useNumbers(void);
-int useAlphabet(void);
-int useSpecialChar(void);
-int methodToUse(void);
+int UseNumbers(void);
+int UseAlphabet(void);
+int UseSpecialChar(void);
+int MethodToUse(void);
 
-PasswordComponent pc = PasswordComponent();
+PasswordComponent password_component = PasswordComponent();
 
 /**
-* Establish a menu to set the paramters to set the passward cracker.
+* Establish a menu to set the paramters to set the passward Cracker.
 * @param passwardToCrack provided password to find
 * @return integer value of what to use to find password
 */
-int mainMenu(void)
+int MainMenu(void)
 {
-	string trashbin, userInput;
+	string trash_bin, user_input;
 	std::string::size_type sz;
-	int minLength, maxLength, numbers, alphabet, symbol;
-	static int returnVal [5] = {0};
+	int minimum_length, max_length, numbers, alphabet, symbol;
+	static int return_value [5] = {0};
 
 	cout << "Please complete the passwords parameters:" << endl;
 
 	do {
 		cout << "The min Length of password: ";
-		cin >> userInput;
-		getline(cin, trashbin);
+		cin >> user_input;
+		getline(cin, trash_bin);
 		try 
 		{
-			minLength = stoi(userInput, &sz);
+			minimum_length = stoi(user_input, &sz);
 		}
 		catch (invalid_argument& e)
 		{
@@ -38,27 +47,27 @@ int mainMenu(void)
 		}
 
 		cout << "The max Length of password: ";
-		cin >> userInput;
-		getline(cin, trashbin);
+		cin >> user_input;
+		getline(cin, trash_bin);
 		try
 		{
-			maxLength = stoi(userInput, &sz);
+			max_length = stoi(user_input, &sz);
 		}
 		catch (invalid_argument& e)
 		{
 			continue;
 		}
 
-		if (minLength <= maxLength && minLength > 0)
+		if (minimum_length <= max_length && minimum_length > 0)
 			break;
 		cout << "Password Max can not be less than Min length.\nPlease Try Again" << endl;
 	} while (true);
 
 	if (true) // testing
 	{
-		alphabet = useAlphabet();
-		numbers = useNumbers();
-		symbol = useSpecialChar();
+		alphabet = UseAlphabet();
+		numbers = UseNumbers();
+		symbol = UseSpecialChar();
 	}
 	else
 	{
@@ -70,18 +79,18 @@ int mainMenu(void)
 	if (alphabet == 0 && numbers == 0 && symbol == 0)
 		cout << "Bad Parameters!" << endl;
 	else
-		setPC(minLength, maxLength, numbers, alphabet, symbol);
+		SetPasswordComponent(minimum_length, max_length, numbers, alphabet, symbol);
 
-	return methodToUse();
+	return MethodToUse();
 }
 
 /**
 * Menu for inclusion of numbers
 * @return 0 no Numbers, 1 use Numbers 
 */
-int useNumbers(void)
+int UseNumbers(void)
 {
-	string trashbin, userInput;
+	string trash_bin, user_input;
 	std::string::size_type sz;
 	int numbers = 0;
 	do {
@@ -91,11 +100,11 @@ int useNumbers(void)
 			"* 1 - Use Numbers          *\n"
 			"****************************\n"
 			"Please Enter 0 or 1: ";
-		cin >> userInput;
-		getline(cin, trashbin);
+		cin >> user_input;
+		getline(cin, trash_bin);
 		try
 		{
-			numbers = stoi(userInput, &sz);
+			numbers = stoi(user_input, &sz);
 		}
 		catch (invalid_argument& e)
 		{
@@ -113,9 +122,9 @@ int useNumbers(void)
 * Menu for inclusion of alphabet
 * @return 0 no alphabet, 1 none cap sensiteve, 2 cap sensitive
 */
-int useAlphabet(void)
+int UseAlphabet(void)
 {
-	string trashbin, userInput;
+	string trash_bin, user_input;
 	std::string::size_type sz;
 	int alphabet = 0;
 	do {
@@ -127,11 +136,11 @@ int useAlphabet(void)
 			"* 3 - Case Sensitive       *\n"
 			"****************************\n"
 			"Please Enter 0, 1, 2, or 3: ";
-		cin >> userInput;
-		getline(cin, trashbin);
+		cin >> user_input;
+		getline(cin, trash_bin);
 		try
 		{
-			alphabet = stoi(userInput, &sz);
+			alphabet = stoi(user_input, &sz);
 		}
 		catch (invalid_argument& e)
 		{
@@ -148,9 +157,9 @@ int useAlphabet(void)
 * Menu for inclusion of special characters
 * @return 0 no symbols, 1 some symbols, 2 all symbols
 */
-int useSpecialChar(void)
+int UseSpecialChar(void)
 {
-	string trashbin, userInput;
+	string trash_bin, user_input;
 	std::string::size_type sz;
 	int symbol = 0;
 	do {
@@ -164,11 +173,11 @@ int useSpecialChar(void)
 			"*   this time.             *\n"
 			"****************************\n"
 			"Please Enter 0, 1, or 2: ";
-		cin >> userInput;
-		getline(cin, trashbin);
+		cin >> user_input;
+		getline(cin, trash_bin);
 		try
 		{
-			symbol = stoi(userInput, &sz);
+			symbol = stoi(user_input, &sz);
 		}
 		catch (invalid_argument& e)
 		{
@@ -185,11 +194,11 @@ int useSpecialChar(void)
 * Ask what kind of method to find password
 * @return 0 both, 1 brute force, 2 file
 */
-int methodToUse(void)
+int MethodToUse(void)
 {
-	string trashbin, userInput;
+	string trash_bin, user_input;
 	std::string::size_type sz;
-	int methodUse = 0;
+	int method_use = 0;
 	do {
 		cout <<
 			"****************************\n"
@@ -202,19 +211,19 @@ int methodToUse(void)
 			"* 5 - Check Password       *\n"
 			"****************************\n"
 			"Please Enter a number above: ";
-		cin >> userInput;
-		getline(cin, trashbin);
+		cin >> user_input;
+		getline(cin, trash_bin);
 		try
 		{
-			methodUse = stoi(userInput, &sz);
+			method_use = stoi(user_input, &sz);
 		}
 		catch (invalid_argument& e)
 		{
 			continue;
 		}
-		if (methodUse >= 0 && methodUse <= 5)
+		if (method_use >= 0 && method_use <= 5)
 			break;
 		cout << "Incorrect Input, Try Again" << endl;
 	} while (true);
-	return methodUse;
+	return method_use;
 }

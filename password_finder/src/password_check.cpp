@@ -1,91 +1,100 @@
+/******************************************************************************
+ * Project: Password Program
+ * Author:  Justin Lam
+ * 
+ * File: password_check.c
+ * 
+ * Description: Checks if password is valid.
+ *****************************************************************************/
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <regex>
-#include "pcheck.h"
-#include "passwordComponent.h"
+#include "password_check.h"
+#include "password_component.h"
 
-#define PALPHABET 0
-#define PNUMBERS 1
-#define PSYMBOLS 2
+#define PASSWORDALPHABET 0
+#define PASSWORDNUMBER 1
+#define PASSWORDSYMBOL 2
 
 #define UPPER 0
 #define LOWER 1
 #define NUMBERS 2
-#define SSYMBOL 3
-#define ASYMBOL 4
+#define SPECIALSYMBOL 3
+#define ALLSYMBOL 4
 
-bool isNumber(char);
-bool isUpper(char);
-bool isLower(char);
-bool isAlphabet(char);
-bool isSymbol(char);
+bool IsNumber(char);
+bool IsUpper(char);
+bool IsLower(char);
+bool IsAlphabet(char);
+bool IsSymbol(char);
 
 /**
-* @param passwordToCrack the password that is being checked to
+* @param password_to_crack the password that is being checked to
 * certiify diffculty in cracking.
 * @return feedback for the difficulty of the password to be cracked.
 */
-string checkPassword(string passwordToCrack)
+string CheckPassword(string password_to_crack)
 {
-	string finalResponse;
+	string final_response;
 	string response = ""; 
-	int grade = 5;
-	int passwordLength;
-	int maxLength = pc.maxLength;
-	int minLength = pc.minLength;
+	int password_grade = 5;
+	int password_length;
+	int max_length = password_component.max_length;
+	int minimum_length = password_component.minimum_length;
 	// 0 alphabet, 1 numbers, 2 symbols
-	int type[3] = {pc.alphabet, pc.numbers, pc.symbol};
+	int type[3] = {password_component.alphabet, password_component.numbers, password_component.symbol};
 	// 0 upper , 1 lower, 2 number, 3 some symbol, 4 all symbol
 	int challenge[5] = { 0,0,0,0,0 };
 		
 	// Based on length and Regex results will determing difficulty
-	passwordLength = passwordToCrack.length();
+	password_length = password_to_crack.length();
 
-	for (int i = 0; i < passwordLength; i++)
+	for (int i = 0; i < password_length; i++)
 	{
-		if (isUpper(passwordToCrack[i]))
+		if (IsUpper(password_to_crack[i]))
 		{
 			challenge[UPPER]++;
 			continue;
 		}
-		if (isLower(passwordToCrack[i]))
+		if (IsLower(password_to_crack[i]))
 		{
 			challenge[LOWER]++;
 			continue;
 		}
-		if (isNumber(passwordToCrack[i]))
+		if (IsNumber(password_to_crack[i]))
 		{
 			challenge[NUMBERS]++;
 			continue;
 		}
-		if (isSymbol(passwordToCrack[i]))
+		if (IsSymbol(password_to_crack[i]))
 		{
-			challenge[ASYMBOL]++;
+			challenge[ALLSYMBOL]++;
 			continue;
 		}
 		cout << "Character is no listed!" << endl;
 	}
 
-	if (minLength != maxLength)
-		if ((passwordLength - minLength) < (maxLength - passwordLength))
+	if (minimum_length != max_length)
+		if ((password_length - minimum_length) < (max_length - password_length))
 		{
 			response.append("Should be longer to maxamize security.\n");
-			grade--;
+			password_grade--;
 		}
 
-	switch (type[PALPHABET])
+	switch (type[PASSWORDALPHABET])
 	{
 	case 1:
 		switch (challenge[UPPER])
 		{
 		case 0:
 			response.append("Since Upper is allowed, having at least 1 upper will increase secuirty.\n");
-			grade -= 2;
+			password_grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 upper will increase secuirty.\n");
-			grade--;
+			password_grade--;
 			break;
 		}
 		break;
@@ -94,11 +103,11 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since lower is allowed, having at least 1 lower will increase secuirty.\n");
-			grade -= 2;
+			password_grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 lower will increase secuirty.\n");
-			grade--;
+			password_grade--;
 			break;
 		}
 		break;
@@ -107,11 +116,11 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since Upper is allowed, having at least 1 upper will increase secuirty.\n");
-			grade -= 2;
+			password_grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 upper will increase secuirty.\n");
-			grade--;
+			password_grade--;
 			break;
 		default:
 			break;
@@ -120,104 +129,104 @@ string checkPassword(string passwordToCrack)
 		{
 		case 0:
 			response.append("Since lower is allowed, having at least 1 lower will increase secuirty.\n");
-			grade -= 2;
+			password_grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 lower will increase secuirty.\n");
-			grade--;
+			password_grade--;
 			break;
 		}
 	}
 
-	switch (type[PNUMBERS])
+	switch (type[PASSWORDNUMBER])
 	{
 	case 1:
 		switch (challenge[NUMBERS])
 		{
 		case 0:
 			response.append("Since Numbers is allowed, having at least 1 number will increase secuirty.\n");
-			grade -= 2;
+			password_grade -= 2;
 		case 1:
 			response.append("Having more than 1 number will increase secuirty.\n");
-			grade--;
+			password_grade--;
 			break;
 		}
 	}
 
-	switch (type[PSYMBOLS])
+	switch (type[PASSWORDSYMBOL])
 	{
 	case 2:
 	case 1:
-		switch (challenge[ASYMBOL])
+		switch (challenge[ALLSYMBOL])
 		{
 		case 0:
 			response.append("Since Symbol is allowed, having at lesat 1 symbol will increase secuirty.\n");
-			grade -= 2;
+			password_grade -= 2;
 			break;
 		case 1:
 			response.append("Having more than 1 symbol will increase secuirty.\n");
-			grade--;
+			password_grade--;
 			break;
 		}
 		break;
 	}
 
-	switch (grade)
+	switch (password_grade)
 	{
 	case 5:
-		finalResponse = "Amazing Password 5/5:\n";
+		final_response = "Amazing Password 5/5:\n";
 		break;
 	case 4:
-		finalResponse = "Great Password 4/5:\n";
+		final_response = "Great Password 4/5:\n";
 		break;
 	case 3:
-		finalResponse = "Okay Password 3/5\n";
+		final_response = "Okay Password 3/5\n";
 		break;
 	case 2:
-		finalResponse = "Weak Password 2/5\n";
+		final_response = "Weak Password 2/5\n";
 		break;
 	case 1:
-		finalResponse = "Bad Password 1/5\n";
+		final_response = "Bad Password 1/5\n";
 		break;
 	default:
-		finalResponse = "Horrible Password 0/5\n";
+		final_response = "Horrible Password 0/5\n";
 		break;
 	}
 
-	finalResponse.append(response);
+	final_response.append(response);
 
-	return finalResponse;
+	return final_response;
 }
 
-bool isNumber(char c)
+bool IsNumber(char c)
 {
 	if (c >= 48 && c <= 57)
 		return true;
 	return false;
 }
 
-bool isUpper(char c)
+bool IsUpper(char c)
 {
 	if (c >= 65 && c <= 90)
 		return true;
 	return false;
 }
 
-bool isLower(char c)
+bool IsLower(char c)
 {
 	if (c >= 97 && c <= 122)
 		return true;
 	return false;
 }
 
-bool isAlphabet(char c)
+bool IsAlphabet(char c)
 {
-	if (isUpper(c) || isLower(c))
+	if (IsUpper(c) || IsLower(c))
 		return true;
 	return false;
 }
 
-bool isSymbol(char c)
+bool IsSymbol(char c)
 {
 	if ((c >= 33 && c <= 47) || (c >= 58 && c <= 64) ||
 		(c >= 91 && c <= 96) || (c >= 123 && c <= 126))

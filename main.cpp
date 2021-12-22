@@ -1,58 +1,67 @@
+/******************************************************************************
+ * Project: Password Program
+ * Author:  Justin Lam
+ * 
+ * File: main.c
+ * 
+ * Description: Main Executable program
+ *****************************************************************************/
+
 using namespace std;
 #include <iostream>
 #include <string>
-#include "panel.h"
-#include "pcrack.h"
-#include "pcompare.h"
-#include "createp.h"
-#include "pcheck.h"
-#include "pda.h"
+#include "panel/include/panel.h"
+#include "create_password/include/create_password.h"
+#include "password_finder/include/password_check.h"
+#include "password_finder/include/password_compare.h"
+#include "password_finder/include/password_crack.h"
+#include "password_finder/include/password_dictionary_attack.h"
 
 string passwordToBeFound(void);
 
 int main(void)
 {
-	string passwordToCrack;
+	string password_to_crack;
 	string passwordFound;
-	string trashbin;
+	string trash_bin;
 	char yn;
 
-	START:switch (mainMenu())
+	START:switch (MainMenu())
 	{
 	case 0:
-		passwordToCrack = passwordToBeFound();
-		passwordFound = compare(passwordToCrack);
+		password_to_crack = passwordToBeFound();
+		passwordFound = Compare(password_to_crack);
 		if (passwordFound != "")
 			break;
-		passwordFound = cracker(passwordToCrack);
+		passwordFound = Cracker(password_to_crack);
 		break;
 	case 1:
-		passwordToCrack = passwordToBeFound();
-		passwordFound = cracker(passwordToCrack);
+		password_to_crack = passwordToBeFound();
+		passwordFound = Cracker(password_to_crack);
 		break;
 	case 2:
-		passwordToCrack = passwordToBeFound();
-		passwordFound = compare(passwordToCrack);
+		password_to_crack = passwordToBeFound();
+		passwordFound = Compare(password_to_crack);
 		break;
 	case 3:
 		// Dictionary attack.
-		passwordToCrack = passwordToBeFound();
-		passwordFound = dictionaryAttack(passwordToCrack);
+		password_to_crack = passwordToBeFound();
+		passwordFound = DictionaryAttack(password_to_crack);
 		break;
 	case 4:
 		// method to generate password.
-		passwordFound = createPassword();
+		passwordFound = CreatePassword();
 		break;
 	case 5:
-		passwordToCrack = passwordToBeFound();
-		passwordFound = compare(passwordToCrack);
+		password_to_crack = passwordToBeFound();
+		passwordFound = Compare(password_to_crack);
 		if (passwordFound != "")
 		{
 			passwordFound = "Really weak, and is found amongst commonly used password. Please consider a different one.";
 			break;
 		}
 		// method to check security of password
-		passwordFound = checkPassword(passwordToCrack);
+		passwordFound = CheckPassword(password_to_crack);
 		break;
 	}
 	if (passwordFound != "")
@@ -63,14 +72,14 @@ int main(void)
 	do {
 		cout << "\n\nRestart? (1 for yes 0 for no): ";
 		cin >> yn;
-		getline(cin, trashbin);
+		getline(cin, trash_bin);
 		switch (yn)
 		{
 		case '0':
 			return 0;
 		case '1':
 			cout << endl;
-			passwordToCrack.clear();
+			password_to_crack.clear();
 			passwordFound.clear();
 			passwordFound = "";
 			goto START;
@@ -92,10 +101,10 @@ int main(void)
 */
 string passwordToBeFound()
 {
-	string passwordToCrack;
-	string trashbin;
+	string password_to_crack;
+	string trash_bin;
 	cout << "Enter Password: ";
-	cin >> passwordToCrack;
-	getline(cin, trashbin);
-	return passwordToCrack;
+	cin >> password_to_crack;
+	getline(cin, trash_bin);
+	return password_to_crack;
 }
