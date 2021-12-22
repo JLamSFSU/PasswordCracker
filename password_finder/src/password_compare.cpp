@@ -1,10 +1,19 @@
+/******************************************************************************
+ * Project: Password Program
+ * Author:  Justin Lam
+ *
+ * File: password_compare.c
+ *
+ * Description: Compares password to pre existing list.
+ *****************************************************************************/
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <thread>
 #include <regex>
-#include "password_compare.h"
-#include "password_component.h"
+#include "../include/password_compare.h"
+#include "../../password_component/include/password_component.h"
 
 int GetList(string[]);
 bool password_compare_file_condition = false;

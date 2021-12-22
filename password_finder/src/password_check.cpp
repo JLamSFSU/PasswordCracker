@@ -11,8 +11,8 @@
 #include <string>
 #include <fstream>
 #include <regex>
-#include "password_check.h"
-#include "password_component.h"
+#include "../include/password_check.h"
+#include "../../password_component/include/password_component.h"
 
 #define PASSWORDALPHABET 0
 #define PASSWORDNUMBER 1

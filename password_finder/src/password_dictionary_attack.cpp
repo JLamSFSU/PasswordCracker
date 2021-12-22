@@ -12,8 +12,8 @@
 #include <fstream>
 #include <vector>
 #include <regex>
-#include "password_dictionary_attack.h"
-#include "password_component.h"
+#include "../include/password_dictionary_attack.h"
+#include "../../password_component/include/password_component.h"
 
 string CollectDataMenu(void);
 string DigitToWord(int);

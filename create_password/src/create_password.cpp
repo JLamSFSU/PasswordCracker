@@ -12,8 +12,8 @@
 #include <regex>
 #include <ctime>
 #include <cstdlib>
-#include "create_password.h"
-#include "password_component.h"
+#include "../include/create_password.h"
+#include "../../password_component/include/password_component.h"
 
 int GenerateType(int);
 bool MinimalRequirement(int[], int, int);

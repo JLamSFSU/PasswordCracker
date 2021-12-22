@@ -9,7 +9,7 @@
 
 #include <iostream>
 #include <string>
-#include "password_component.h"
+#include "../include/password_component.h"
 
 bool debug_bool = false;
 

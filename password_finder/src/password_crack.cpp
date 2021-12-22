@@ -10,8 +10,8 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include "password_crack.h"
-#include "password_component.h"
+#include "../include/password_crack.h"
+#include "../../password_component/include/password_component.h"
 #define NUMBERSONLY 10
 #define ALPHABETONLY 100
 
