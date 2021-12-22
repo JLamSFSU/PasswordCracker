@@ -49,7 +49,7 @@ string Compare(string password_to_crack)
 		for (int i = 0; i < size_of_list; i++)
 		{
 			if (debug_bool) cout << i <<") Checking: " << password_array[i] << endl;;
-			if (password_to_crack.Compare(password_array[i]) == 0)
+			if (password_to_crack.compare(password_array[i]) == 0)
 			{
 				cout << "Password is found in database..." << endl;
 				file.close();

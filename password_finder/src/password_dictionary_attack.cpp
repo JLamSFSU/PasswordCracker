@@ -109,9 +109,9 @@ int BuildDictionary(vector <string> &words)
 		cout << "Would you like to import part of the dictionary? (y/n) ";
 		cin >> user_input;
 		getline(cin, trash_bin);
-		if (user_input.Compare("y") == 0)
+		if (user_input.compare("y") == 0)
 			break;
-		if (user_input.Compare("n") == 0)
+		if (user_input.compare("n") == 0)
 			return 0;
 	}
 
@@ -151,9 +151,9 @@ int ManualInputDictionary(vector <string>& words)
 	while (true)
 	{
 		word_to_enter = CollectDataMenu();
-		if (word_to_enter.Compare("&&&") == 0)
+		if (word_to_enter.compare("&&&") == 0)
 			break;
-		if (word_to_enter.Compare("%%%") == 0)
+		if (word_to_enter.compare("%%%") == 0)
 		{
 			cout << "Current Dictionary:" << endl;
 			for (int i = 0; i < words.size(); i++)

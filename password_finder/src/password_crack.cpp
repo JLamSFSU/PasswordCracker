@@ -74,7 +74,7 @@ string Cracker(string password_to_crack)
 	{	
 		password = ConvertToString(password_array, size);
 		if (debug_bool) cout << "Testing: " << password << endl;
-		if (password_to_crack.Compare(password) == 0)
+		if (password_to_crack.compare(password) == 0)
 		{
 			cout << "Password Found." << endl;
 			break;
