@@ -30,11 +30,6 @@
 *.exe
 *.out
 *.app
-.vs/PasswordCracker/v16/.suo
-.vs/PasswordCracker/v16/Browse.VC.db
-.vs/ProjectSettings.json
-.vs/slnx.sqlite
-.vs/VSWorkspaceState.json
-CppProperties.json
-PasswordCracker/.vs/**
-PasswordCracker/Debug/**
+.vs/*
+x64/*
+Debug/*
