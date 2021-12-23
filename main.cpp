@@ -17,55 +17,55 @@ using namespace std;
 #include "password_finder/include/password_crack.h"
 #include "password_finder/include/password_dictionary_attack.h"
 
-string passwordToBeFound(void);
+string PasswordToBeFound(void);
 
 int main(void)
 {
 	string password_to_crack;
-	string passwordFound;
+	string password_found;
 	string trash_bin;
 	char yn;
 
 	START:switch (MainMenu())
 	{
 	case 0:
-		password_to_crack = passwordToBeFound();
-		passwordFound = Compare(password_to_crack);
-		if (passwordFound != "")
+		password_to_crack = PasswordToBeFound();
+		password_found = Compare(password_to_crack);
+		if (password_found != "")
 			break;
-		passwordFound = Cracker(password_to_crack);
+		password_found = Cracker(password_to_crack);
 		break;
 	case 1:
-		password_to_crack = passwordToBeFound();
-		passwordFound = Cracker(password_to_crack);
+		password_to_crack = PasswordToBeFound();
+		password_found = Cracker(password_to_crack);
 		break;
 	case 2:
-		password_to_crack = passwordToBeFound();
-		passwordFound = Compare(password_to_crack);
+		password_to_crack = PasswordToBeFound();
+		password_found = Compare(password_to_crack);
 		break;
 	case 3:
 		// Dictionary attack.
-		password_to_crack = passwordToBeFound();
-		passwordFound = DictionaryAttack(password_to_crack);
+		password_to_crack = PasswordToBeFound();
+		password_found = DictionaryAttack(password_to_crack);
 		break;
 	case 4:
 		// method to generate password.
-		passwordFound = CreatePassword();
+		password_found = CreatePassword();
 		break;
 	case 5:
-		password_to_crack = passwordToBeFound();
-		passwordFound = Compare(password_to_crack);
-		if (passwordFound != "")
+		password_to_crack = PasswordToBeFound();
+		password_found = Compare(password_to_crack);
+		if (password_found != "")
 		{
-			passwordFound = "Really weak, and is found amongst commonly used password. Please consider a different one.";
+			password_found = "Really weak, and is found amongst commonly used password. Please consider a different one.";
 			break;
 		}
 		// method to check security of password
-		passwordFound = CheckPassword(password_to_crack);
+		password_found = CheckPassword(password_to_crack);
 		break;
 	}
-	if (passwordFound != "")
-		cout << "Password: " << passwordFound << endl;
+	if (password_found != "")
+		cout << "Password: " << password_found << endl;
 	else
 		cout << "Try again..." << endl;
 
@@ -80,8 +80,8 @@ int main(void)
 		case '1':
 			cout << endl;
 			password_to_crack.clear();
-			passwordFound.clear();
-			passwordFound = "";
+			password_found.clear();
+			password_found = "";
 			goto START;
 		default:
 			cout << "Bad Entry" << endl;
@@ -99,7 +99,7 @@ int main(void)
 * interface with desired platforms to try different passwords till
 * success.
 */
-string passwordToBeFound()
+string PasswordToBeFound()
 {
 	string password_to_crack;
 	string trash_bin;
